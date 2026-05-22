@@ -3,68 +3,76 @@ using System.Media;
 using System.Windows.Forms;
 using System.Drawing;
 
-public class CyberDesign
+namespace CyberGuard
 {
-    protected RichTextBox ChatDisplay {  get; set; }
-    //this is for the voice greeting
-    public void VoiceGreeting()
+    public class CyberDesign
     {
-        try
+        protected RichTextBox ChatDisplay { get; set; }
+        //this is for the voice greeting
+        public void VoiceGreeting()
         {
-            SoundPlayer player = new SoundPlayer(@"C:\\Users\\gmkin\\Documents\\second year\\PROG6221\\ASSIGNMENT\\PART1\\CyberGuard\\greet.wav");
-            player.PlaySync();
+            try
+            {
+                string wavPath = System.IO.Path.Combine(
+                 AppDomain.CurrentDomain.BaseDirectory, "greet.wav");
+                if(System.IO.File.Exists(wavPath))
+                {
+                    SoundPlayer player = new SoundPlayer(wavPath);
+                    player.PlaySync();
+                }
+            }
+            catch (Exception ex)
+            {
+                BotWarn("Error playing sound: " + ex.Message);
+            }
         }
-        catch (Exception ex)
+        // Bot response — cyan
+        public void BotSay(string message)
+            => DisplayMessage("🤖  " + message, Color.Cyan);
+
+        // Warning or error — red
+        public void BotWarn(string message)
+            => DisplayMessage("⚠   " + message, Color.Tomato);
+
+        // Section header — gold
+        public void BotHeader(string message)
+            => DisplayMessage("\n══════ " + message + " ══════", Color.Gold);
+
+        // Info bullet point — light cyan
+        public void BotInfo(string message)
+            => DisplayMessage("     " + message, Color.LightCyan);
+
+        // User's own message — green
+        public void UserSay(string message)
+            => DisplayMessage("👤  " + message, Color.LightGreen);
+
+        // Separator line — dim gray
+        public void BotLine()
+            => DisplayMessage("─────────────────────────────────────────", Color.DimGray);
+
+
+        //this is for the logo design
+        public void LogoDisplay()
         {
-            Console.WriteLine("Error playing sound: " + ex.Message);
+            DisplayMessage("╔════════════════════════════════════════════════════════════════════════════════════╗\r\n║  ██████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗ ║\r\n║ ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗║\r\n║ ██║      ╚████╔╝ ██████╔╝█████╗  ██████╔╝██║  ███╗██║   ██║███████║██████╔╝██║  ██║║\r\n║ ██║       ╚██╔╝  ██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║║\r\n║ ╚██████╗   ██║   ██████╔╝███████╗██║  ██║╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝║\r\n║  ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ║\r\n╚════════════════════════════════════════════════════════════════════════════════════╝", Color.DodgerBlue);
         }
-    }
-    // Bot response — cyan
-    public void BotSay(string message)
-        => DisplayMessage("🤖  " + message, Color.Cyan);
-
-    // Warning or error — red
-    public void BotWarn(string message)
-        => DisplayMessage("⚠   " + message, Color.Tomato);
-
-    // Section header — gold
-    public void BotHeader(string message)
-        => DisplayMessage("\n══════ " + message + " ══════", Color.Gold);
-
-    // Info bullet point — light cyan
-    public void BotInfo(string message)
-        => DisplayMessage("     " + message, Color.LightCyan);
-
-    // User's own message — green
-    public void UserSay(string message)
-        => DisplayMessage("👤  " + message, Color.LightGreen);
-
-    // Separator line — dim gray
-    public void BotLine()
-        => DisplayMessage("─────────────────────────────────────────", Color.DimGray);
-
-
-    //this is for the logo design
-    public void LogoDisplay()
-    {
-        Console.WriteLine("╔════════════════════════════════════════════════════════════════════════════════════╗\r\n║  ██████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗ ║\r\n║ ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗║\r\n║ ██║      ╚████╔╝ ██████╔╝█████╗  ██████╔╝██║  ███╗██║   ██║███████║██████╔╝██║  ██║║\r\n║ ██║       ╚██╔╝  ██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║║\r\n║ ╚██████╗   ██║   ██████╔╝███████╗██║  ██║╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝║\r\n║  ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ║\r\n╚════════════════════════════════════════════════════════════════════════════════════╝");
-    }
-    public void Box(string text)
-    {
-        int width = text.Length + 2;
-        //this will wrap the users welcome message in a box
-        Console.WriteLine("╔" + new string('═', width) + "╗");
-        Console.WriteLine("║ " + text + " ║");
-        Console.WriteLine("╚" + new string('═', width) + "╝");
-    }
-    public void DisplayMessage(string message, Color colour)
-    {
-        if(ChatDisplay == null)
+        public void Box(string text)
         {
-            return;
+            int width = text.Length + 2;
+            //this will wrap the users welcome message in a box
+            DisplayMessage("╔" + new string('═', width) + "╗", Color.DodgerBlue);
+            DisplayMessage("║ " + text + " ║", Color.DodgerBlue);
+            DisplayMessage("╚" + new string('═', width) + "╝", Color.DodgerBlue);
         }
-        ChatDisplay.SelectionColor = colour;
-        ChatDisplay.AppendText(message + "\n");
-        ChatDisplay.ScrollToCaret();
+        public void DisplayMessage(string message, Color colour)
+        {
+            if (ChatDisplay == null)
+            {
+                return;
+            }
+            ChatDisplay.SelectionColor = colour;
+            ChatDisplay.AppendText(message + "\n");
+            ChatDisplay.ScrollToCaret();
+        }
     }
 }
