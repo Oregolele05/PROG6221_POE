@@ -1,4 +1,4 @@
-﻿namespace CyberGuard
+namespace CyberGuard
 {
     partial class CyberForm
     {
@@ -33,6 +33,7 @@
             this.txtUserInput = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtUserInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUserInput_KeyDown);
             this.SuspendLayout();
             // 
             // richTextBox
