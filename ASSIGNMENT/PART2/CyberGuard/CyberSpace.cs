@@ -57,7 +57,6 @@ namespace CyberGuard
             BotInfo("2. What is your purpose?");
             BotInfo("3. What can I ask you about?");
             BotInfo("4. Exit");
-            BotSay("Or just type freely. I recognise cybersecurity keywords");
         }
         public void ResponseSystem(string input)
         {
@@ -100,6 +99,10 @@ namespace CyberGuard
             {
                 ShowTopicMenu();
             }
+            else if (input.Contains("exit") || input == "4" || input == "four")
+            {
+                ShowGoodbye();
+            }
 
             else
             {
@@ -130,7 +133,7 @@ namespace CyberGuard
 
         public void ShowTopicMenu()
         {
-            user.Section = "topicMenu";
+            user.Section = "topicmenu";
             BotLine();
             BotSay("You can ask me about the following topics:");
             BotInfo("1. Password Safety");
@@ -416,7 +419,7 @@ namespace CyberGuard
                 BotSay("Here's a random password safety tip: " + getTip());
             }
             //this will go back to the main menu
-            else if (input.Contains("go back") || input == "6")
+            else if (input.Contains("go back") || input == "7")
             {
                 BotSay("Returning to the topic menu...");
                 ShowTopicMenu();

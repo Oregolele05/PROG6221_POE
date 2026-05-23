@@ -40,7 +40,7 @@ namespace CyberGuard
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            string input = txtUserInput.Text.ToLower().Trim();
+            string input = txtUserInput.Text.Trim();
             if (string.IsNullOrEmpty(input))
             {
                 return; // Ignore empty input
@@ -67,7 +67,7 @@ namespace CyberGuard
             switch (space.CurrentSection)
             {
                 case "getname":
-                    // Pass original input — name should keep its capitalisation
+  
                     space.UserInteraction(input);
                     break;
 

@@ -56,7 +56,6 @@
     <Compile Include="CyberSpace.cs" />
     <Compile Include="CyberTips.cs" />
     <Compile Include="CyberUser.cs" />
-    <Compile Include="file.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Cyber.resx" />
