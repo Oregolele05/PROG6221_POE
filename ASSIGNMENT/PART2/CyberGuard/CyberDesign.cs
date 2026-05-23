@@ -15,10 +15,10 @@ namespace CyberGuard
             {
                 string wavPath = System.IO.Path.Combine(
                  AppDomain.CurrentDomain.BaseDirectory, "greet.wav");
-                if(System.IO.File.Exists(wavPath))
+                if (System.IO.File.Exists(wavPath))
                 {
                     SoundPlayer player = new SoundPlayer(wavPath);
-                    player.PlaySync();
+                    player.Play();
                 }
             }
             catch (Exception ex)
@@ -54,7 +54,15 @@ namespace CyberGuard
         //this is for the logo design
         public void LogoDisplay()
         {
-            DisplayMessage("╔════════════════════════════════════════════════════════════════════════════════════╗\r\n║  ██████╗██╗   ██╗██████╗ ███████╗██████╗  ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗ ║\r\n║ ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗║\r\n║ ██║      ╚████╔╝ ██████╔╝█████╗  ██████╔╝██║  ███╗██║   ██║███████║██████╔╝██║  ██║║\r\n║ ██║       ╚██╔╝  ██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║║\r\n║ ╚██████╗   ██║   ██████╔╝███████╗██║  ██║╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝║\r\n║  ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ║\r\n╚════════════════════════════════════════════════════════════════════════════════════╝", Color.DodgerBlue);
+            DisplayMessage("", Color.DodgerBlue);
+            DisplayMessage("  ╔════════════════════════════════════════════════╗", Color.DodgerBlue);
+            DisplayMessage("  ║                                                ║", Color.DodgerBlue);
+            DisplayMessage("  ║         C Y B E R G U A R D                    ║", Color.Cyan);
+            DisplayMessage("  ║                                                ║", Color.DodgerBlue);
+            DisplayMessage("  ║    Cyber Awareness & Education Chatbot         ║", Color.LightCyan);
+            DisplayMessage("  ║                                                ║", Color.DodgerBlue);
+            DisplayMessage("  ╚════════════════════════════════════════════════╝", Color.DodgerBlue);
+            DisplayMessage("", Color.DodgerBlue);
         }
         public void Box(string text)
         {

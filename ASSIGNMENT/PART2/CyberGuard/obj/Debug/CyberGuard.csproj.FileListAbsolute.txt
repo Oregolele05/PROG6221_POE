@@ -27,3 +27,9 @@ C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\ASSIGNMENT\PROG6221_POE\ASS
 C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\ASSIGNMENT\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.Properties.Resources.resources
 C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\ASSIGNMENT\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.csproj.GenerateResource.cache
 C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\ASSIGNMENT\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.csproj.CoreCompileInputs.cache
+C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.csproj.AssemblyReference.cache
+C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.Cyber.resources
+C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.CyberForm.resources
+C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.Properties.Resources.resources
+C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.csproj.GenerateResource.cache
+C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.csproj.CoreCompileInputs.cache

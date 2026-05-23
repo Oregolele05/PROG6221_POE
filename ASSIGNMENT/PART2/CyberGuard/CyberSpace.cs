@@ -416,7 +416,7 @@ namespace CyberGuard
                 BotSay("Here's a random password safety tip: " + getTip());
             }
             //this will go back to the main menu
-            else if (input.Contains("go back") || input == "7")
+            else if (input.Contains("go back") || input == "6")
             {
                 BotSay("Returning to the topic menu...");
                 ShowTopicMenu();
