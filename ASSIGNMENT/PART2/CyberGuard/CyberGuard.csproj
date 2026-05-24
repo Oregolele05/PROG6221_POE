@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cyber.Designer.cs" />
+    <Compile Include="CyberForm.Designer.cs" />
     <Compile Include="CyberDesign.cs" />
     <Compile Include="CyberForm.cs">
       <SubType>Form</SubType>
