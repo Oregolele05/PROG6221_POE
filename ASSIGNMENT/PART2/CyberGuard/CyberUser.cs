@@ -31,17 +31,15 @@ public class CyberUser
         int max = 0;
         foreach (var count in topicCount)
         {
-            if(count.Value > max)
+            if (count.Value > max)
             {
                 max = count.Value;
                 favTopic = count.Key;
 
             }
-            
-        }
-        lastTopic = topic;
+            lastTopic = topic;
+        }   
     }
-
 }
 
 

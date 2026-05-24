@@ -71,7 +71,10 @@ namespace CyberGuard
             string keyword = tips.CheckKeywords(input);
             if (keyword != null)
             {
-                BotSay(tips.SentimentResponse(sentiment));
+                if(sentiment != "neutral")
+                {
+                    BotSay(tips.SentimentResponse(sentiment));
+                }
                 BotInfo(keyword);
                 ShowMainMenu();
                 return;
@@ -123,10 +126,23 @@ namespace CyberGuard
             BotSay("Here's another tip on " + user.lastTopic + ":");
 
             TipProvider getTip;
-            if (user.lastTopic == "Phishing") getTip = tips.GetPhishingTip;
-            else if (user.lastTopic == "Password Safety") getTip = tips.GetPasswordTip;
-            else if (user.lastTopic == "Safe Browsing") getTip = tips.GetSafeBrowsingTip;
-            else { BotInfo("No extra tips on that topic yet."); return; }
+            if (user.lastTopic == "Phishing") 
+            {              
+               getTip = tips.GetPhishingTip;
+            }
+            else if (user.lastTopic == "Password Safety")
+            {
+               getTip = tips.GetPasswordTip;
+            }
+            else if (user.lastTopic == "Safe Browsing")
+            {
+               getTip = tips.GetSafeBrowsingTip;
+            }
+            else
+            {
+               BotInfo("No extra tips on that topic yet.");
+               return;
+            }
 
             BotInfo(getTip());
         }
@@ -363,7 +379,7 @@ namespace CyberGuard
         {
             //check for sentiment and respond accordingly
             string sentiment = tips.Sentiment(input);
-            if (sentiment != null)
+            if (sentiment != "neutral")
             {
                 BotSay(tips.SentimentResponse(sentiment));
             }
@@ -371,47 +387,47 @@ namespace CyberGuard
             if (input.Contains("definition") || input.Contains("what is") || input == "1")
             {
                 BotHeader("DEFINITION");
-                BotSay("Password safety refers to the practices and technologies used to protect");
-                BotSay(" passwords from being stolen, guessed, or compromised.");
+                BotInfo("Password safety refers to the practices and technologies used to protect");
+                BotInfo(" passwords from being stolen, guessed, or compromised.");
             }
             //these are the common risks or dangers
             else if (input.Contains("common risks") || input.Contains("dangers") || input == "2")
             {
                 BotHeader("COMMON RISKS");
-                BotSay("1. Brute Force Attacks: Hackers try every possible combination until they succeed.");
-                BotSay("2. Credential Stuffing: Using leaked passwords from one site to access others.");
-                BotSay("3. Keyloggers: Malware that records everything you type");
-                BotSay("4. Shoulder Surfing: Someone physically watching you type your password.");
-                BotSay("5. Data Breaches: Your password being exposed when a company is hacked.");
+                BotInfo("1. Brute Force Attacks: Hackers try every possible combination until they succeed.");
+                BotInfo("2. Credential Stuffing: Using leaked passwords from one site to access others.");
+                BotInfo("3. Keyloggers: Malware that records everything you type");
+                BotInfo("4. Shoulder Surfing: Someone physically watching you type your password.");
+                BotInfo("5. Data Breaches: Your password being exposed when a company is hacked.");
 
             }
             //this is how to make a strong password
             else if (input.Contains("strong") && input.Contains("password") || input == "3")
             {
-                BotHeader("WHAT MAKES A STRONG PASSWORDS");
-                BotSay("1. At least 12 characters long");
-                BotSay("2. Mix of uppercase, lowercase, numbers and symbols.");
-                BotSay("3. No personal info like your name, birthday or pet's name.");
-                BotSay("4. Not a common word or sequence");
+                BotHeader("WHAT MAKES A STRONG PASSWORD");
+                BotInfo("1. At least 12 characters long");
+                BotInfo("2. Mix of uppercase, lowercase, numbers and symbols.");
+                BotInfo("3. No personal info like your name, birthday or pet's name.");
+                BotInfo("4. Not a common word or sequence");
 
             }
             //these are the best practices of password safety
             else if (input.Contains("best") || input.Contains("practices") || input == "4")
             {
                 BotHeader("BEST PRACTICES");
-                BotSay("1. Use a unique password for every account.");
-                BotSay("2. Enable Multi-Factor Authentication wherever possible.");
-                BotSay("3. Use a password manager to store them securely.");
-                BotSay("4. Change passwords immediately if you suspect a breach.");
-                BotSay("5. Never share your password with anyone, even IT support.");
+                BotInfo("1. Use a unique password for every account.");
+                BotInfo("2. Enable Multi-Factor Authentication wherever possible.");
+                BotInfo("3. Use a password manager to store them securely.");
+                BotInfo("4. Change passwords immediately if you suspect a breach.");
+                BotInfo("5. Never share your password with anyone, even IT support.");
             }
             //these is how hackers crack passwords
             else if (input.Contains("hackers") || input.Contains("crack") || input == "5")
             {
                 BotHeader("HOW HACKERS CRACK PASSWORDS");
-                BotSay("1. Dictionary attacks using common words and phrases.");
-                BotSay("2. Buying leaked credentials from the dark web.");
-                BotSay("3. Social engineering - tricking you into revealing it yourself.");
+                BotInfo("1. Dictionary attacks using common words and phrases.");
+                BotInfo("2. Buying leaked credentials from the dark web.");
+                BotInfo("3. Social engineering - tricking you into revealing it yourself.");
             }
             else if (input.Contains("random") || input.Contains("tip") || input == "6")
             {

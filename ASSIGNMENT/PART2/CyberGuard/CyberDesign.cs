@@ -48,7 +48,7 @@ namespace CyberGuard
 
         // Separator line — dim gray
         public void BotLine()
-            => DisplayMessage("─────────────────────────────────────────", Color.DimGray);
+            => DisplayMessage("─────────────────────────────────────────-─────────────────────────────────────────-─────────────────────────────────────────-─────────────────────────────────────────-", Color.DimGray);
 
 
         //this is for the logo design
