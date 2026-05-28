@@ -1,83 +1,80 @@
 using System;
+using System.Drawing;
 using System.Media;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace CyberGuard
 {
     public class CyberDesign
     {
         protected RichTextBox ChatDisplay { get; set; }
-        //this is for the voice greeting
+
         public void VoiceGreeting()
         {
             try
             {
-                string wavPath = System.IO.Path.Combine(
-                 AppDomain.CurrentDomain.BaseDirectory, "greet.wav");
-                if (System.IO.File.Exists(wavPath))
-                {
-                    SoundPlayer player = new SoundPlayer(wavPath);
-                    player.Play();
-                }
+                SoundPlayer player = new SoundPlayer(@"C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\greet.wav");
+                player.Play();
             }
             catch (Exception ex)
             {
                 BotWarn("Error playing sound: " + ex.Message);
             }
         }
-        // Bot response — cyan
+
         public void BotSay(string message)
-            => DisplayMessage("🤖  " + message, Color.Cyan);
+            => DisplayMessage("🤖  " + message, Color.FromArgb(230, 57, 70));
 
-        // Warning or error — red
         public void BotWarn(string message)
-            => DisplayMessage("⚠   " + message, Color.Tomato);
+            => DisplayMessage("⚠   " + message, Color.FromArgb(230, 57, 70));
 
-        // Section header — gold
         public void BotHeader(string message)
-            => DisplayMessage("\n══════ " + message + " ══════", Color.Gold);
+            => DisplayMessage("\n══════ " + message + " ══════", Color.FromArgb(255, 140, 66));
 
-        // Info bullet point — light cyan
         public void BotInfo(string message)
-            => DisplayMessage("     " + message, Color.LightCyan);
+            => DisplayMessage("     " + message, Color.FromArgb(230, 57, 70));
 
-        // User's own message — green
         public void UserSay(string message)
-            => DisplayMessage("👤  " + message, Color.LightGreen);
+            => DisplayMessage("👤  " + message, Color.FromArgb(179, 179, 179));
 
-        // Separator line — dim gray
+        // Restored to your original BotLine color
         public void BotLine()
-            => DisplayMessage("─────────────────────────────────────────-─────────────────────────────────────────-─────────────────────────────────────────-─────────────────────────────────────────-", Color.DimGray);
+            => DisplayMessage("───────────────────────────────────────────────────────────────────────────────────────────────────────", Color.FromArgb(230, 57, 70));
 
-
-        //this is for the logo design
+        // Restored to your exact original line-art logo style, perfectly centered
+        // FIXED: Removed SelectionAlignment centering to fix the skewed frame borders. 
+        // Uses consistent string lengths and precise padding spaces to center beautifully.
         public void LogoDisplay()
         {
-            DisplayMessage("", Color.DodgerBlue);
-            DisplayMessage("  ╔════════════════════════════════════════════════╗", Color.DodgerBlue);
-            DisplayMessage("  ║                                                ║", Color.DodgerBlue);
-            DisplayMessage("  ║         C Y B E R G U A R D                    ║", Color.Cyan);
-            DisplayMessage("  ║                                                ║", Color.DodgerBlue);
-            DisplayMessage("  ║    Cyber Awareness & Education Chatbot         ║", Color.LightCyan);
-            DisplayMessage("  ║                                                ║", Color.DodgerBlue);
-            DisplayMessage("  ╚════════════════════════════════════════════════╝", Color.DodgerBlue);
-            DisplayMessage("", Color.DodgerBlue);
+            Color orangeAccent = Color.FromArgb(255, 140, 66);
+            Color redAccent = Color.FromArgb(230, 57, 70);
+            Color lightText = Color.FromArgb(237, 237, 237);
+
+            // Slightly optimized margins specifically balanced for a clean look in Consolas 11pt
+            DisplayMessage("", orangeAccent);
+            DisplayMessage("  ╔═════════════════════════════════════════════════════════════════════════════════╗", orangeAccent);
+            DisplayMessage("  ║    ____ _  _ ___  ____ ____ ____ _  _ ____ ____ ___                             ║", redAccent);
+            DisplayMessage("  ║    |    |__| |__] |___ |__/ | __ |  | |__| |__/ |  \\                            ║", redAccent);
+            DisplayMessage("  ║    |___  ||  |__] |___ |  \\ |__] |__| |  | |  \\ |__/                            ║", redAccent);
+            DisplayMessage("  ║                                                                                 ║", orangeAccent);
+            DisplayMessage("  ║                       Cyber Awareness & Education Chatbot                       ║", lightText);
+            DisplayMessage("  ╚═════════════════════════════════════════════════════════════════════════════════╝", orangeAccent);
+            DisplayMessage("", orangeAccent);
         }
+
         public void Box(string text)
         {
+            Color orangeAccent = Color.FromArgb(255, 140, 66);
             int width = text.Length + 2;
-            //this will wrap the users welcome message in a box
-            DisplayMessage("╔" + new string('═', width) + "╗", Color.DodgerBlue);
-            DisplayMessage("║ " + text + " ║", Color.DodgerBlue);
-            DisplayMessage("╚" + new string('═', width) + "╝", Color.DodgerBlue);
+            DisplayMessage("╔" + new string('═', width) + "╗", orangeAccent);
+            DisplayMessage("║ " + text + " ║", orangeAccent);
+            DisplayMessage("╚" + new string('═', width) + "╝", orangeAccent);
         }
+
         public void DisplayMessage(string message, Color colour)
         {
-            if (ChatDisplay == null)
-            {
-                return;
-            }
+            if (ChatDisplay == null) return;
+
             ChatDisplay.SelectionColor = colour;
             ChatDisplay.AppendText(message + "\n");
             ChatDisplay.ScrollToCaret();

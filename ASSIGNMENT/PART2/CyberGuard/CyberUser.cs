@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 public class CyberUser
 {
     public string username = string.Empty;
@@ -35,11 +34,8 @@ public class CyberUser
             {
                 max = count.Value;
                 favTopic = count.Key;
-
             }
             lastTopic = topic;
-        }   
+        }
     }
 }
-
-

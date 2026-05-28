@@ -13,30 +13,16 @@ namespace CyberGuard
         public CyberForm()
         {
             InitializeComponent();
-            //this codes links cyberspace with richtextbox
             space.Initialise(richTextBox);
-            //this plays voice greeting on form load
             space.VoiceGreeting();
-            //this displays the logo on form load
             space.WelcomeScreen();
             this.txtUserInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUserInput_KeyDown);
             txtUserInput.Focus();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CyberForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        private void label1_Click(object sender, EventArgs e) { }
+        private void CyberForm_Load(object sender, EventArgs e) { }
+        private void richTextBox1_TextChanged(object sender, EventArgs e) { }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
@@ -50,6 +36,7 @@ namespace CyberGuard
 
             HandleInput(input);
         }
+
         private void txtUserInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -58,8 +45,10 @@ namespace CyberGuard
                 e.SuppressKeyPress = true; // Prevent the ding sound
             }
         }
+
         private void txtUserInput_TextChanged(object sender, EventArgs e) { }
         private void Form1_Load(object sender, EventArgs e) { }
+
         private void HandleInput(string input)
         {
             string lower = input.ToLower();
@@ -67,7 +56,6 @@ namespace CyberGuard
             switch (space.CurrentSection)
             {
                 case "getname":
-  
                     space.UserInteraction(input);
                     break;
 
@@ -92,12 +80,10 @@ namespace CyberGuard
                     break;
 
                 case "goodbye":
-                    // Session ended — disable input
                     DisableInput();
                     break;
             }
 
-            // Disable input if goodbye was reached
             if (space.CurrentSection == "goodbye")
                 DisableInput();
         }
@@ -107,6 +93,5 @@ namespace CyberGuard
             txtUserInput.Enabled = false;
             btnSend.Enabled = false;
         }
-
     }
 }

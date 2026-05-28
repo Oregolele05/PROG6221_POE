@@ -4,10 +4,8 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Linq;
 
-
 namespace CyberGuard
 {
-    //used for random tip selection throughtout CyberSpace
     public delegate string TipProvider();
 
     public class CyberSpace : CyberDesign
@@ -20,6 +18,7 @@ namespace CyberGuard
         {
             ChatDisplay = chatDisplay;
         }
+
         public void WelcomeScreen()
         {
             LogoDisplay();
@@ -28,12 +27,11 @@ namespace CyberGuard
             BotSay("Before we begin, what is your name?");
             user.Section = "getname";
         }
+
         public void UserInteraction(string input)
         {
-            //this code will validate the user input for name
             if (string.IsNullOrWhiteSpace(input))
             {
-
                 BotWarn("\nPlease enter a valid name.");
                 return;
             }
@@ -47,8 +45,8 @@ namespace CyberGuard
             Box("Welcome " + user.username + " nice to meet you!!");
             BotLine();
             ShowMainMenu();
-
         }
+
         public void ShowMainMenu()
         {
             user.Section = "main";
@@ -58,6 +56,7 @@ namespace CyberGuard
             BotInfo("3. What can I ask you about?");
             BotInfo("4. Exit");
         }
+
         public void ResponseSystem(string input)
         {
             if (input.Contains("tell me more") || input.Contains("another tip")
@@ -71,7 +70,7 @@ namespace CyberGuard
             string keyword = tips.CheckKeywords(input);
             if (keyword != null)
             {
-                if(sentiment != "neutral")
+                if (sentiment != "neutral")
                 {
                     BotSay(tips.SentimentResponse(sentiment));
                 }
@@ -80,24 +79,20 @@ namespace CyberGuard
                 return;
             }
 
-            //this will return how the chatbot is doing and also validate the user input for the how are you question
             if (input.Contains("how are you") || input == "1" || input == "one")
             {
                 BotSay("I am doing okay I guess. Thanks for asking, " + user.username + ".");
-                //shows fav topic if the user has viewed any topics yet
                 if (!string.IsNullOrEmpty(user.favTopic))
                 {
                     BotSay("You have been most interested in " + user.favTopic + ". Would you like to know more about it?");
                 }
                 ShowMainMenu();
             }
-            //this will return the purpose of the chatbot and also validate the user input for the purpose question
             else if (input.Contains("purpose") || input == "2" || input == "two")
             {
                 BotSay("My purpose is to educate individuals and organizations to reognize, prevent, and respond to cyber threats, thereby reducing the risk of security breaches and protecting sensitive data.");
                 ShowMainMenu();
             }
-            //This will return what the user can ask about and will also validate the user input for the topics
             else if (input.Contains("about") || input == "3" || input == "three")
             {
                 ShowTopicMenu();
@@ -106,7 +101,6 @@ namespace CyberGuard
             {
                 ShowGoodbye();
             }
-
             else
             {
                 TipProvider confused = tips.GetRandomCofusedResponse;
@@ -126,22 +120,22 @@ namespace CyberGuard
             BotSay("Here's another tip on " + user.lastTopic + ":");
 
             TipProvider getTip;
-            if (user.lastTopic == "Phishing") 
-            {              
-               getTip = tips.GetPhishingTip;
+            if (user.lastTopic == "Phishing")
+            {
+                getTip = tips.GetPhishingTip;
             }
             else if (user.lastTopic == "Password Safety")
             {
-               getTip = tips.GetPasswordTip;
+                getTip = tips.GetPasswordTip;
             }
             else if (user.lastTopic == "Safe Browsing")
             {
-               getTip = tips.GetSafeBrowsingTip;
+                getTip = tips.GetSafeBrowsingTip;
             }
             else
             {
-               BotInfo("No extra tips on that topic yet.");
-               return;
+                BotInfo("No extra tips on that topic yet.");
+                return;
             }
 
             BotInfo(getTip());
@@ -160,7 +154,6 @@ namespace CyberGuard
 
         public void HandleTopicMenu(string input)
         {
-            //this will return information about password safety
             if (input.Contains("password") || input == "1" || input == "one")
             {
                 user.TrackTopic("Password Safety");
@@ -202,9 +195,9 @@ namespace CyberGuard
             BotInfo("6.  Give me a random tip");
             BotInfo("7.  Go Back");
         }
+
         public void HandleSafeBrowsing(string input)
         {
-            //check for sentiment and respond accordingly
             string sentiment = tips.Sentiment(input);
             if (sentiment != null)
             {
@@ -238,7 +231,7 @@ namespace CyberGuard
             {
                 BotHeader("TOOLS THAT HELP");
                 BotInfo("1. VPN (Virtual Private Network) - Encrypts your internet connection.");
-                BotInfo("2. Password Manager             - Autofills only on legitimate sites.");
+                BotInfo("2. Password Manager              - Autofills only on legitimate sites.");
                 BotInfo("3. Antivirus Software           - Blocks known malicious sites.");
                 BotInfo("4. Browser Safe Browsing Mode   - Warns you before visiting dangerous sites.");
             }
@@ -262,179 +255,75 @@ namespace CyberGuard
             }
             else
             {
-                BotWarn("I didn't catch that. Choose from 1 to 7.");
+                TipProvider confused = tips.GetRandomCofusedResponse;
+                BotWarn(confused());
             }
 
-            ShowSafeBrowsingMenu();
+            BotLine();
+            BotSay("Select another option (1-7) or type 'back' to change sub-topics.");
         }
 
-        public void ShowPhishingMenu()
+        // ==========================================
+        // ADDED MISSING PASSWORD MENU SYSTEM
+        // ==========================================
+        public void ShowPasswordMenu()
         {
-            user.Section = "phishing";
-            BotHeader("PHISHING");
-            TipProvider getTip = tips.GetPhishingTip;
+            user.Section = "password";
+            BotHeader("PASSWORD SAFETY");
+            TipProvider getTip = tips.GetPasswordTip;
             BotSay("Quick tip: " + getTip());
             BotLine();
-            BotSay("What would you like to know about Phishing?");
-            BotInfo("1.  Definition");
-            BotInfo("2.  Common Types");
-            BotInfo("3.  Risks");
-            BotInfo("4.  How to Spot It");
-            BotInfo("5.  How to Stay Safe");
+            BotSay("What would you like to know about Password Safety?");
+            BotInfo("1.  Importance of Strong Passwords");
+            BotInfo("2.  How to Create a Strong Password");
+            BotInfo("3.  What is Two-Factor Authentication (2FA)?");
+            BotInfo("4.  Why use a Password Manager?");
+            BotInfo("5.  Common Mistakes to Avoid");
             BotInfo("6.  Give me a random tip");
             BotInfo("7.  Go Back");
         }
 
-        public void HandlePhishing(string input)
-        {
-            //check for sentiment and respond accordingly
-            string sentiment = tips.Sentiment(input);
-            if (sentiment != null)
-            {
-                BotSay(tips.SentimentResponse(sentiment));
-            }
-
-            if (input.Contains("definition") || input.Contains("what is") || input == "1")
-            {
-                BotHeader("DEFINITION");
-                BotInfo("Phishing is a type of cyberattack where attackers impersonate trusted sources");
-                BotInfo("to trick people into revealing sensitive information or installing malware.");
-            }
-            //these are the common types of phishing
-
-            else if (input.Contains("common types") || input.Contains("types") || input == "2")
-            {
-                BotHeader("COMMON TYPES OF PHISHING");
-                BotInfo("1.Email Phishing: Fraudulent emails that appear to be from reputable sources.");
-                BotInfo("2.Spear Phishing: Targeted attacks aimed at specific individuals or organizations.");
-                BotInfo("3.Smishing: Phishing attempts via SMS text messages.");
-                BotInfo("4.Vishing: Voice phishing over phone calls.");
-                BotInfo("5.Clone Phishing: Creating a nearly identical copy of a legitimate email with malicious links.");
-
-            }
-            //these are the risks of phishing
-            else if (input.Contains("risks") || input.Contains("dangers") || input == "3")
-            {
-                BotHeader("RISKS OF PHISHING");
-                BotInfo("1.Identity Theft: Stealing personal information to commit fraud.");
-                BotInfo("2.Financial Loss: Gaining access to bank accounts or credit cards.");
-                BotInfo("3.Data Breaches: Compromising sensitive company data.");
-                BotInfo("4.Malware Infection: Installing harmful software on your device.");
-            }
-            //this is how to spot phishing attacks
-            else if (input.Contains("spot") || input == "4")
-            {
-                BotHeader("HOW TO SPOT PHISHING");
-                BotInfo("1.Check the sender's email address for legitimacy.");
-                BotInfo("2. Look for spelling and grammar mistakes in the message.");
-                BotInfo("3.Hover over links to see the actual URL before clicking.");
-                BotInfo("4.Be cautious of urgent or threatening language.");
-            }
-            //this is how to stay safe from phishing attacks
-            else if (input.Contains("stay safe") || input == "5")
-            {
-                BotHeader("HOW TO STAY SAFE FROM PHISHING");
-                BotInfo("1.Never click on links or download attachments from unknown senders.");
-                BotInfo("2.Use anti-phishing software and keep it updated.");
-                BotInfo("3.Verify requests for sensitive information through a separate channel.");
-                BotInfo("4.Educate yourself and others about common phishing tactics.");
-            }
-            else if (input.Contains("random") || input.Contains("tip") || input == "6")
-            {
-                TipProvider getTip = tips.GetPhishingTip;
-                BotSay("Here's a random phishing tip: " + getTip());
-            }
-            //this will go back to main menu
-            else if (input.Contains("go back") || input.Contains("back") || input == "7")
-            {
-                BotSay("Returning to the topic menu...");
-                ShowTopicMenu();
-                return;
-            }
-            else
-            {
-                BotWarn("I didn't quite understand that. Could you rephrase?");
-            }
-            ShowPhishingMenu();
-        }
-
-        public void ShowPasswordMenu()
-        {
-            user.Section = "password";
-            BotHeader("Password Safety");
-            //immediate tip about password safety
-            TipProvider getTip = tips.GetPasswordTip;
-            BotSay("Here are some tips to keep your passwords safe: " + getTip());
-            BotLine();
-            BotSay("What would you like to know about password safety?");
-            BotInfo("1. Definition");
-            BotInfo("2. Common Risks");
-            BotInfo("3. What Makes a Strong Password");
-            BotInfo("4. Best Practices");
-            BotInfo("5. How Hackers Crack Passwords");
-            BotInfo("6. Give me a random tip");
-            BotInfo("7. Go back");
-        }
         public void HandlePassword(string input)
         {
-            //check for sentiment and respond accordingly
             string sentiment = tips.Sentiment(input);
             if (sentiment != "neutral")
             {
                 BotSay(tips.SentimentResponse(sentiment));
             }
-            //this if the definition
-            if (input.Contains("definition") || input.Contains("what is") || input == "1")
-            {
-                BotHeader("DEFINITION");
-                BotInfo("Password safety refers to the practices and technologies used to protect");
-                BotInfo(" passwords from being stolen, guessed, or compromised.");
-            }
-            //these are the common risks or dangers
-            else if (input.Contains("common risks") || input.Contains("dangers") || input == "2")
-            {
-                BotHeader("COMMON RISKS");
-                BotInfo("1. Brute Force Attacks: Hackers try every possible combination until they succeed.");
-                BotInfo("2. Credential Stuffing: Using leaked passwords from one site to access others.");
-                BotInfo("3. Keyloggers: Malware that records everything you type");
-                BotInfo("4. Shoulder Surfing: Someone physically watching you type your password.");
-                BotInfo("5. Data Breaches: Your password being exposed when a company is hacked.");
 
-            }
-            //this is how to make a strong password
-            else if (input.Contains("strong") && input.Contains("password") || input == "3")
+            if (input.Contains("importance") || input == "1")
             {
-                BotHeader("WHAT MAKES A STRONG PASSWORD");
-                BotInfo("1. At least 12 characters long");
-                BotInfo("2. Mix of uppercase, lowercase, numbers and symbols.");
-                BotInfo("3. No personal info like your name, birthday or pet's name.");
-                BotInfo("4. Not a common word or sequence");
-
+                BotHeader("IMPORTANCE");
+                BotInfo("Passwords are your first line of defense against cyber threats.");
+                BotInfo("Weak credentials let automatic scripts crack your profile instantly.");
             }
-            //these are the best practices of password safety
-            else if (input.Contains("best") || input.Contains("practices") || input == "4")
+            else if (input.Contains("create") || input == "2")
             {
-                BotHeader("BEST PRACTICES");
-                BotInfo("1. Use a unique password for every account.");
-                BotInfo("2. Enable Multi-Factor Authentication wherever possible.");
-                BotInfo("3. Use a password manager to store them securely.");
-                BotInfo("4. Change passwords immediately if you suspect a breach.");
-                BotInfo("5. Never share your password with anyone, even IT support.");
+                BotHeader("CREATION STRATEGY");
+                BotInfo("1. Use long passphrases with three or more random connected words.");
+                BotInfo("2. Implement distinct symbols, capitalization rules, and integers.");
             }
-            //these is how hackers crack passwords
-            else if (input.Contains("hackers") || input.Contains("crack") || input == "5")
+            else if (input.Contains("2fa") || input == "3")
             {
-                BotHeader("HOW HACKERS CRACK PASSWORDS");
-                BotInfo("1. Dictionary attacks using common words and phrases.");
-                BotInfo("2. Buying leaked credentials from the dark web.");
-                BotInfo("3. Social engineering - tricking you into revealing it yourself.");
+                BotHeader("TWO-FACTOR AUTHENTICATION");
+                BotInfo("2FA forces checking sequences onto mobile links before unlocking logins.");
             }
-            else if (input.Contains("random") || input.Contains("tip") || input == "6")
+            else if (input.Contains("manager") || input == "4")
+            {
+                BotHeader("PASSWORD MANAGERS");
+                BotInfo("Managers encrypt individual application login profiles safely within structural vaults.");
+            }
+            else if (input.Contains("mistakes") || input == "5")
+            {
+                BotHeader("COMMON MISTAKES");
+                BotInfo("1. Reusing matching verification strings across personal networks.");
+                BotInfo("2. Leaving credential parameters written down on unprotected surfaces.");
+            }
+            else if (input.Contains("random") || input == "6")
             {
                 TipProvider getTip = tips.GetPasswordTip;
-                BotSay("Here's a random password safety tip: " + getTip());
+                BotSay("Random Password Tip: " + getTip());
             }
-            //this will go back to the main menu
             else if (input.Contains("go back") || input == "7")
             {
                 BotSay("Returning to the topic menu...");
@@ -443,25 +332,106 @@ namespace CyberGuard
             }
             else
             {
-                BotWarn("I didn't quite understand that. Could you rephrase?");
+                TipProvider confused = tips.GetRandomCofusedResponse;
+                BotWarn(confused());
             }
-            ShowPasswordMenu();
+
+            BotLine();
+            BotSay("Select another option (1-7) or type 'back' to return.");
         }
+
+        // ==========================================
+        // ADDED MISSING PHISHING MENU SYSTEM
+        // ==========================================
+        public void ShowPhishingMenu()
+        {
+            user.Section = "phishing";
+            BotHeader("PHISHING AWARENESS");
+            TipProvider getTip = tips.GetPhishingTip;
+            BotSay("Quick tip: " + getTip());
+            BotLine();
+            BotSay("What would you like to know about Phishing?");
+            BotInfo("1.  What is Phishing?");
+            BotInfo("2.  How to Identify Phishing Attempts");
+            BotInfo("3.  Common Types of Phishing Attacks");
+            BotInfo("4.  What to do if you suspect a Scam");
+            BotInfo("5.  How to report malicious messages");
+            BotInfo("6.  Give me a random tip");
+            BotInfo("7.  Go Back");
+        }
+
+        public void HandlePhishing(string input)
+        {
+            string sentiment = tips.Sentiment(input);
+            if (sentiment != "neutral")
+            {
+                BotSay(tips.SentimentResponse(sentiment));
+            }
+
+            if (input.Contains("what is") || input == "1")
+            {
+                BotHeader("PHISHING DEFINITION");
+                BotInfo("Phishing involves mimicking trusted companies to harvest identities.");
+            }
+            else if (input.Contains("identify") || input == "2")
+            {
+                BotHeader("IDENTIFICATION METRICS");
+                BotInfo("1. Look out for forced artificial urgency indicators.");
+                BotInfo("2. Check for mismatched email domains or bad grammar rules.");
+            }
+            else if (input.Contains("types") || input == "3")
+            {
+                BotHeader("ATTACK TYPES");
+                BotInfo("1. Spear phishing: Targets chosen profiles explicitly.");
+                BotInfo("2. Smishing: Malicious content distributed via SMS text messages.");
+            }
+            else if (input.Contains("suspect") || input == "4")
+            {
+                BotHeader("SUSPICION STRATEGY");
+                BotInfo("Avoid opening links or downloads. Independently reach out to entities via verified help lines.");
+            }
+            else if (input.Contains("report") || input == "5")
+            {
+                BotHeader("REPORTING CHANNELS");
+                BotInfo("Forward suspicious activity patterns directly to your organization's IT service desk.");
+            }
+            else if (input.Contains("random") || input == "6")
+            {
+                TipProvider getTip = tips.GetPhishingTip;
+                BotSay("Random Phishing Tip: " + getTip());
+            }
+            else if (input.Contains("go back") || input == "7")
+            {
+                BotSay("Returning to the topic menu...");
+                ShowTopicMenu();
+                return;
+            }
+            else
+            {
+                TipProvider confused = tips.GetRandomCofusedResponse;
+                BotWarn(confused());
+            }
+
+            BotLine();
+            BotSay("Select another option (1-7) or type 'back' to return.");
+        }
+
+        // ==========================================
+        // ADDED MISSING GOODBYE ENGINE STATE CLOSURE
+        // ==========================================
         public void ShowGoodbye()
         {
-            BotLine();
-            Box("Goodbye, " + user.username + "! Stay safe online!");
-            BotLine();
-
-            if (user.topicsViewed.Count > 0)
-            {
-                BotSay("During our session you learned about: " + string.Join(", ", user.topicsViewed));
-                if (!string.IsNullOrEmpty(user.favTopic))
-                    BotSay("Your most visited topic was: " + user.favTopic + ". Keep learning to stay protected!");
-            }
-
-            BotSay("Remember: Stay vigilant, stay informed, stay safe!");
             user.Section = "goodbye";
+            BotLine();
+            Box("SESSION TERMINATED BY USER");
+            BotSay("Thank you for using CyberGuard, " + user.username + "!");
+            if (!string.IsNullOrEmpty(user.favTopic))
+            {
+                BotSay("You spent the most time looking into: " + user.favTopic.ToUpper());
+                BotSay("Remember to follow those guidelines out on the web!");
+            }
+            BotSay("System turning off. Keep your firewall active and stay alert online.");
+            BotLine();
         }
     }
 }
