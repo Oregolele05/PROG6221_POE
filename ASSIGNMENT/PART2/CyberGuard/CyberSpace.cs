@@ -53,10 +53,11 @@ namespace CyberGuard
             BotLine();
             ShowMainMenu();
         }
-
+        // Whenever the main menu is shown, we check if the user is transitioning away from a specific topic section.
+        // If so, we call TrackTopic with an empty string to flush the time metrics for that topic before moving on to the main menu.
         public void ShowMainMenu()
         {
-            // Clear tracking nodes when jumping to core menus so we don't accidentally leak idle time
+            
             if (user.Section == "password" || user.Section == "phishing" || user.Section == "safebrowsing")
             {
                 user.TrackTopic("");
@@ -74,7 +75,7 @@ namespace CyberGuard
         {
             string cleanInput = input.ToLower().Trim();
 
-            // SECTION 5 TASK: Explicit Memory Processing Loop
+            
             if (cleanInput.Contains("interested in") || cleanInput.Contains("favourite topic is") || cleanInput.Contains("favorite topic is"))
             {
                 string matchedTopic = "";
@@ -91,14 +92,14 @@ namespace CyberGuard
                 }
             }
 
-            // SECTION 4 TASK: Seamless Conversation Flow & Follow-Up Hooks
+        
             if (cleanInput.Contains("tell me more") || cleanInput.Contains("another tip")
                || cleanInput.Contains("explain more") || cleanInput.Contains("more info"))
             {
                 user.QuestionCount++;
                 HandleFollowUp();
 
-                // Inject personal memory if available
+               
                 if (!string.IsNullOrEmpty(user.declaredFavTopic))
                 {
                     BotInfo($"💡 As someone interested in {user.declaredFavTopic}, you might want to keep this approach in mind during your day-to-day operations.");
@@ -168,6 +169,9 @@ namespace CyberGuard
             }
         }
 
+        // This method handles follow-up requests for more information on the last discussed topic.
+        // It checks if there is a valid last topic and then provides an additional tip related to that topic.
+        // If no specific topic has been discussed yet, it prompts the user to ask about one of the main topics first.
         public void HandleFollowUp()
         {
             if (string.IsNullOrEmpty(user.lastTopic))
@@ -193,6 +197,7 @@ namespace CyberGuard
             BotInfo(getTip());
         }
 
+        // The ShowTopicMenu method displays the main topics that the user can ask about. It also sets the user's current section to "topicmenu" for tracking purposes.
         public void ShowTopicMenu()
         {
             user.Section = "topicmenu";
@@ -204,6 +209,9 @@ namespace CyberGuard
             BotInfo("4. Exit to Main Menu");
         }
 
+        // The HandleTopicMenu method processes the user's selection from the topic menu.
+        // It checks the input against expected keywords and numbers to determine which topic the user wants to explore.
+        // It also tracks the selected topic for engagement analytics and then calls the appropriate method to display that topic's menu.
         public void HandleTopicMenu(string input)
         {
             string cleanInput = input.ToLower().Trim();
@@ -232,7 +240,8 @@ namespace CyberGuard
                 BotWarn("I didn't quite understand that selection. Could you try choosing options 1 through 4?");
             }
         }
-
+        // The ShowPasswordMenu method displays the subtopics related to password safety.
+        // It also sets the user's current section to "password" for tracking purposes and provides a quick tip related to passwords.
         public void ShowPasswordMenu()
         {
             user.Section = "password";
@@ -250,6 +259,7 @@ namespace CyberGuard
             BotInfo("7.  Go Back");
         }
 
+        // The HandlePassword method processes the user's selection from the password safety menu.
         public void HandlePassword(string input)
         {
             string cleanInput = input.ToLower().Trim();
@@ -316,7 +326,7 @@ namespace CyberGuard
             BotLine();
             BotSay("Select another option (1-7) or type 'back' to return.");
         }
-
+        // The ShowPhishingMenu method displays the subtopics related to phishing awareness.
         public void ShowPhishingMenu()
         {
             user.Section = "phishing";
@@ -333,7 +343,7 @@ namespace CyberGuard
             BotInfo("6.  Give me a random tip");
             BotInfo("7.  Go Back");
         }
-
+        // The HandlePhishing method processes the user's selection from the phishing awareness menu.
         public void HandlePhishing(string input)
         {
             string cleanInput = input.ToLower().Trim();
@@ -400,7 +410,7 @@ namespace CyberGuard
             BotLine();
             BotSay("Select another option (1-7) or type 'back' to return.");
         }
-
+        // The ShowSafeBrowsingMenu method displays the subtopics related to safe browsing practices.
         public void ShowSafeBrowsingMenu()
         {
             user.Section = "safebrowsing";
@@ -417,7 +427,7 @@ namespace CyberGuard
             BotInfo("6.  Give me a random tip");
             BotInfo("7.  Go Back");
         }
-
+        // The HandleSafeBrowsing method processes the user's selection from the safe browsing menu.
         public void HandleSafeBrowsing(string input)
         {
             string cleanInput = input.ToLower().Trim();
@@ -489,7 +499,9 @@ namespace CyberGuard
             BotLine();
             BotSay("Select another option (1-7) or type 'back' to return.");
         }
-
+        // The ShowGoodbye method is responsible for displaying a farewell message to the user when they choose to exit the chatbot.
+        // It also provides a summary of the user's engagement with the chatbot, including the total number of educational questions asked, their most discussed topic,
+        // and a breakdown of time spent on each topic. This method ensures that all time metrics are flushed before termination to provide accurate analytics.
         public void ShowGoodbye()
         {
             // Flush remaining time metrics before termination

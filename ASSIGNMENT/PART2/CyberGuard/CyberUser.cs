@@ -13,7 +13,7 @@ namespace CyberGuard
         public string declaredFavTopic { get; set; } = "";
         private string calculatedFavTopic { get; set; } = "";
 
-        // Unified property: Uses explicit user declaration first; falls back to time tracking metrics if empty
+        // gets the user's favorite topic, prioritizing the explicitly declared one, but falling back to the calculated one based on engagement analytics if no declaration exists
         public string favTopic
         {
             get

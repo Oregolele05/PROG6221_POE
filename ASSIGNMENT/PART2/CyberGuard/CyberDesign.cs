@@ -10,7 +10,7 @@ namespace CyberGuard
     {
         protected RichTextBox ChatDisplay { get; set; }
 
-        // Core Theme Colors mapping your CSS properties
+        // Core Theme Colors
         private readonly Color _themeBgColor = Color.FromArgb(30, 30, 30);    // CSS #1E1E1E (Dark Gray)
         private readonly Color _primaryRed = Color.FromArgb(230, 57, 70);    // CSS #E63946 (Cyber Red)
         private readonly Color _secondaryOrange = Color.FromArgb(255, 140, 66); // CSS #FF8C42 (Neon Orange)
@@ -20,7 +20,6 @@ namespace CyberGuard
         {
             try
             {
-                // Finds the bin\Debug or output folder dynamically
                 string baseDir = AppDomain.CurrentDomain.BaseDirectory;
                 string soundPath = Path.Combine(baseDir, "greet.wav");
 
@@ -34,12 +33,13 @@ namespace CyberGuard
             }
             catch (Exception ex)
             {
-                // System fallback if file access fails
+                
                 SystemSounds.Asterisk.Play();
             }
         }
 
-        // Bot Box - Styled with sleek, rounded arc corners and locked Dark Background
+        
+        //will return the bots response in a styled box format with the bot icon and red color scheme, aligned to the left
         public void BotSay(string message)
         {
             string rawText = "🤖 Bot: " + message;
@@ -50,16 +50,19 @@ namespace CyberGuard
             DisplayMessage("╰" + new string('─', width) + "╯", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
         }
 
+        //will warn for a invalid input or unrecognized command in a red color scheme with a warning icon, aligned to the left
         public void BotWarn(string message)
             => DisplayMessage("⚠   " + message, _primaryRed, _themeBgColor, HorizontalAlignment.Left);
 
+        // will display a header message in a bright orange color scheme with a decorative line, aligned to the left
         public void BotHeader(string message)
             => DisplayMessage("\n══════ " + message + " ══════", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
 
+        // will display informational messages in a lighter red color scheme with an info icon, aligned to the left
         public void BotInfo(string message)
             => DisplayMessage("     " + message, _primaryRed, _themeBgColor, HorizontalAlignment.Left);
 
-        // User Box - Styled with sleek, rounded arc corners and locked Dark Background
+        // will return the user's message in a styled box format with the user icon and orange color scheme, aligned to the right
         public void UserSay(string message)
         {
             string rawText = "You: " + message + " 👤";
@@ -74,7 +77,7 @@ namespace CyberGuard
         public void BotLine()
             => DisplayMessage("────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
 
-        // Header Logo - Fully isolated inside the dark color scheme properties
+        // will display the chatbot's logo in a stylized ASCII art format with the primary red and secondary orange color scheme, aligned to the center
         public void LogoDisplay()
         {
             if (ChatDisplay == null) return;
@@ -90,6 +93,7 @@ namespace CyberGuard
             DisplayMessage("", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
         }
 
+        // wraps welcome message
         public void Box(string text)
         {
             int width = text.Length + 2;
