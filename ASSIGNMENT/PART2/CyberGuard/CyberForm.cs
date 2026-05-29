@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Media;
 using System.Windows.Forms;
 
 namespace CyberGuard
@@ -16,7 +12,7 @@ namespace CyberGuard
             space.Initialise(richTextBox);
             space.VoiceGreeting();
             space.WelcomeScreen();
-            this.txtUserInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUserInput_KeyDown);
+            this.txtUserInput.KeyDown += new KeyEventHandler(this.txtUserInput_KeyDown);
             txtUserInput.Focus();
         }
 
@@ -42,7 +38,7 @@ namespace CyberGuard
             if (e.KeyCode == Keys.Enter)
             {
                 btnSend_Click(sender, e);
-                e.SuppressKeyPress = true; // Prevent the ding sound
+                e.SuppressKeyPress = true; // Prevent the default ding notification noise
             }
         }
 

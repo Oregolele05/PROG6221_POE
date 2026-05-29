@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CyberGuard
 {
@@ -9,7 +8,23 @@ namespace CyberGuard
         public string username { get; set; } = "User";
         public string Section { get; set; } = "getname";
         public string lastTopic { get; set; } = "";
-        public string favTopic { get; set; } = "";
+
+        // Memory Profile Data
+        public string declaredFavTopic { get; set; } = "";
+        private string calculatedFavTopic { get; set; } = "";
+
+        // Unified property: Uses explicit user declaration first; falls back to time tracking metrics if empty
+        public string favTopic
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(declaredFavTopic) ? declaredFavTopic : calculatedFavTopic;
+            }
+            set
+            {
+                calculatedFavTopic = value;
+            }
+        }
 
         // Engagement Analytics
         public int QuestionCount { get; set; } = 0;
@@ -18,7 +33,7 @@ namespace CyberGuard
 
         public void TrackTopic(string newTopic)
         {
-            // 1. Calculate and save elapsed time for the previous topic before changing state
+            // 1. Log the time spent on the topic the user is currently leaving
             if (!string.IsNullOrEmpty(lastTopic))
             {
                 TimeSpan duration = DateTime.Now - TopicStartTime;
@@ -32,18 +47,37 @@ namespace CyberGuard
                 }
             }
 
-            lastTopic = newTopic;
-            // 2. Transition state configurations to the new active topic
-            if (TopicDurations.Count > 0)
+            // 2. Set the new incoming topic as the active one
+            if (!string.IsNullOrEmpty(newTopic))
             {
-                favTopic = TopicDurations.OrderByDescending(x => x.Value).First().Key;
-            }
-            else if (!string.IsNullOrEmpty(newTopic))
-            {
-                favTopic = newTopic;
+                lastTopic = newTopic;
             }
 
-            TopicStartTime = DateTime.Now; // Reset track clock timer
+            // 3. Recalculate which topic has the most accumulated time
+            DetermineFavoriteTopic();
+
+            // 4. Reset the tracking timer for the new active state
+            TopicStartTime = DateTime.Now;
+        }
+
+        private void DetermineFavoriteTopic()
+        {
+            TimeSpan longestDuration = TimeSpan.Zero;
+            string bestTopic = "";
+
+            foreach (var record in TopicDurations)
+            {
+                if (!string.IsNullOrEmpty(record.Key) && record.Value > longestDuration)
+                {
+                    longestDuration = record.Value;
+                    bestTopic = record.Key;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(bestTopic))
+            {
+                calculatedFavTopic = bestTopic;
+            }
         }
     }
 }

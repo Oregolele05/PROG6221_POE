@@ -80,13 +80,13 @@ namespace CyberGuard
             if (ChatDisplay == null) return;
 
             DisplayMessage("", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
-            DisplayMessage("                 ╔═════════════════════════════════════════════════════════════════════════════════╗", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
-            DisplayMessage("                 ║    ____ _  _ ___  ____ ____ ____ _  _ ____ ____ ___                             ║", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
-            DisplayMessage("                 ║    |    |__| |__] |___ |__/ | __ |  | |__| |__/ |  \\                            ║", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
-            DisplayMessage("                 ║    |___ ||  |__] |___ |  \\ |__] |__| |  | |  \\ |__/                             ║", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
-            DisplayMessage("                 ║                                                                                 ║", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
-            DisplayMessage("                 ║                       Cyber Awareness & Education Chatbot                       ║", _lightTextColor, _themeBgColor, HorizontalAlignment.Left);
-            DisplayMessage("                 ╚═════════════════════════════════════════════════════════════════════════════════╝", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("                    ╔═════════════════════════════════════════════════════════════════════════════════╗", _secondaryOrange, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║              ____ _  _ ___  ____ ____ ____ _  _ ____ ____ ___                   ║", _primaryRed, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║              |    |__| |__] |___ |__/ | __ |  | |__| |__/ |  \\                  ║", _primaryRed, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║              |___  ||  |__] |___ |  \\ |__] |__| |  | |  \\ |__/                  ║", _primaryRed, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║                                                                                 ║", _secondaryOrange, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║                       Cyber Awareness & Education Chatbot                       ║", _lightTextColor, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ╚═════════════════════════════════════════════════════════════════════════════════╝", _secondaryOrange, _themeBgColor, HorizontalAlignment.Center);
             DisplayMessage("", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
         }
 
@@ -98,7 +98,7 @@ namespace CyberGuard
             DisplayMessage("╰" + new string('─', width) + "╯", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
         }
 
-        // Standard Message Painter Handler Configuration
+        // Standard Message Painter Handler Configuration - Renders text instantly
         public void DisplayMessage(string message, Color textColour, Color textBgColour, HorizontalAlignment alignment)
         {
             if (ChatDisplay == null) return;

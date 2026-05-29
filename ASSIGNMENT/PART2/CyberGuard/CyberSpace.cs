@@ -40,7 +40,6 @@ namespace CyberGuard
                 return;
             }
 
-            // Explicit verification filter blocking unauthorized special symbol arrays
             string invalidChars = "!@#$%^&*()_=-<>.?/\\|+][{}\":;'~`_";
             if (input.Any(ch => invalidChars.Contains(ch)))
             {
@@ -57,7 +56,7 @@ namespace CyberGuard
 
         public void ShowMainMenu()
         {
-            // Safely dump current time delta caches if coming back from active menus
+            // Clear tracking nodes when jumping to core menus so we don't accidentally leak idle time
             if (user.Section == "password" || user.Section == "phishing" || user.Section == "safebrowsing")
             {
                 user.TrackTopic("");
@@ -75,22 +74,46 @@ namespace CyberGuard
         {
             string cleanInput = input.ToLower().Trim();
 
-            // Root interceptor listener tracking global help commands
+            // SECTION 5 TASK: Explicit Memory Processing Loop
+            if (cleanInput.Contains("interested in") || cleanInput.Contains("favourite topic is") || cleanInput.Contains("favorite topic is"))
+            {
+                string matchedTopic = "";
+                if (cleanInput.Contains("password")) matchedTopic = "Password Safety";
+                else if (cleanInput.Contains("phishing")) matchedTopic = "Phishing";
+                else if (cleanInput.Contains("browsing") || cleanInput.Contains("web")) matchedTopic = "Safe Browsing";
+
+                if (!string.IsNullOrEmpty(matchedTopic))
+                {
+                    user.declaredFavTopic = matchedTopic;
+                    BotSay($"Great! I'll remember that you're interested in {matchedTopic}. It's a crucial part of staying safe online.");
+                    ShowMainMenu();
+                    return;
+                }
+            }
+
+            // SECTION 4 TASK: Seamless Conversation Flow & Follow-Up Hooks
             if (cleanInput.Contains("tell me more") || cleanInput.Contains("another tip")
                || cleanInput.Contains("explain more") || cleanInput.Contains("more info"))
             {
                 user.QuestionCount++;
                 HandleFollowUp();
+
+                // Inject personal memory if available
+                if (!string.IsNullOrEmpty(user.declaredFavTopic))
+                {
+                    BotInfo($"💡 As someone interested in {user.declaredFavTopic}, you might want to keep this approach in mind during your day-to-day operations.");
+                }
+
                 ShowMainMenu();
                 return;
             }
 
-            // Root interceptor tracking dedicated analytics report requests
             if (cleanInput.Contains("favourite topic") || cleanInput.Contains("favorite topic") || cleanInput.Contains("most interested"))
             {
                 if (!string.IsNullOrEmpty(user.favTopic))
                 {
-                    BotSay("You have been most interested in " + user.favTopic + ". Would you like to know more about it?");
+                    string sourceContext = !string.IsNullOrEmpty(user.declaredFavTopic) ? "you stated earlier" : "calculated runtime tracking";
+                    BotSay($"According to {sourceContext}, your favorite topic is {user.favTopic}. Let me know if you would like to review its modules!");
                 }
                 else
                 {
@@ -100,6 +123,7 @@ namespace CyberGuard
                 return;
             }
 
+            // Keyword Evaluation Metrics
             string sentiment = tips.Sentiment(input);
             string keyword = tips.CheckKeywords(input);
             if (keyword != null)
@@ -119,7 +143,7 @@ namespace CyberGuard
                 BotSay("I am doing okay I guess. Thanks for asking, " + user.username + ".");
                 if (!string.IsNullOrEmpty(user.favTopic))
                 {
-                    BotSay("You have been most interested in " + user.favTopic + ". Would you like to know more about it?");
+                    BotSay($"Since your favorite topic seems to be {user.favTopic}, we could jump right back in if you're ready!");
                 }
                 ShowMainMenu();
             }
@@ -208,8 +232,6 @@ namespace CyberGuard
                 BotWarn("I didn't quite understand that selection. Could you try choosing options 1 through 4?");
             }
         }
-
-        // ==================== SUB MENU TRACKS ====================
 
         public void ShowPasswordMenu()
         {
@@ -470,7 +492,9 @@ namespace CyberGuard
 
         public void ShowGoodbye()
         {
-            user.TrackTopic(""); // Final log capturing last remaining time balances
+            // Flush remaining time metrics before termination
+            user.TrackTopic("");
+
             user.Section = "goodbye";
 
             BotLine();

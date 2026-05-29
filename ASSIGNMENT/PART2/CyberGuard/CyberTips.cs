@@ -21,73 +21,50 @@ public class CyberTips
         { "browser",   "Keep your browser updated and avoid clicking suspicious links or pop-up ads." },
         { "https",     "Always check for HTTPS and a padlock icon in the address bar before entering personal info." },
         { "vpn",       "A VPN encrypts your internet connection and hides your IP address. Use one on public Wi-Fi." },
-        { "wifi",      "Avoid using public Wi-Fi for sensitive tasks. Use a VPN to encrypt your connection." },
-        { "cookie",    "Clear your cookies and cache regularly to protect your browsing privacy." },
-        { "malware",   "Malware can enter your device through downloads and email attachments. Keep your antivirus updated." },
+        { "wifi",      "Avoid using public Wi-Fi for sensitive transactions like online banking unless you are using a trusted VPN." },
+        { "malware",   "Malware stands for malicious software. Install reputable anti-virus programs and keep them updated to defend your system." }
     };
 
     protected List<string> phishingTips = new List<string>()
     {
-        "Be cautious of emails asking for personal information. Scammers disguise themselves as trusted organisations.",
-        "Always hover over links before clicking — the real URL often reveals a fake site.",
-        "Legitimate companies will never ask for your password via email.",
-        "Check for spelling mistakes in email addresses — 'paypa1.com' is not PayPal.",
-        "If an email creates urgency like 'Act now or your account closes', treat it as suspicious."
+        "Look out for spelling mistakes and generic greetings like 'Dear Customer' in emails.",
+        "Check the email address of the sender carefully. Scammers often use addresses that look similar to official ones.",
+        "Never share sensitive information like passwords or PINs via email or text messages."
     };
 
     protected List<string> passwordTips = new List<string>()
     {
-        "Use a passphrase like 'Coffee@Sunrise!2024' — it is stronger than random strings.",
-        "Never reuse passwords across multiple sites. A breach on one exposes all your accounts.",
-        "Enable two-factor authentication wherever possible.",
-        "A password manager like Bitwarden generates and stores strong passwords for you.",
-        "Change passwords immediately if a service you use gets breached."
+        "A strong password should be at least 12 characters long and include a mix of letters, numbers, and symbols.",
+        "Consider using a password manager to securely store and generate complex passwords.",
+        "Change your passwords immediately if you suspect an account has been compromised."
     };
 
     protected List<string> safeBrowsingTips = new List<string>()
     {
-        "Always check for HTTPS and a padlock icon before entering any personal info.",
-        "Avoid clicking pop-up ads — they are a common way to install malware.",
-        "Use a reputable browser like Chrome, Firefox, or Edge and keep it updated.",
-        "Install an ad blocker to reduce your exposure to malicious advertisements.",
-        "Log out of accounts when done, especially on shared or public computers."
+        "Be cautious when downloading files from unfamiliar websites. They could contain malware.",
+        "Don't click on pop-up advertisements. Close them by clicking the 'X' on the window, not inside the ad.",
+        "Clear your browser history and cookies regularly to help protect your online privacy."
     };
 
     protected List<string> confusedResponses = new List<string>()
     {
-        "I'm not sure I understand. Can you try rephrasing?",
-        "Hmm, I didn't quite catch that. Could you ask differently?",
-        "I don't have info on that yet. Try asking about phishing, passwords, or safe browsing.",
-        "That's outside what I know right now. Ask me about a cybersecurity topic!"
+        "I'm not quite sure I follow. Could you try rephrasing that or choosing an option from the menu?",
+        "Hmm, I didn't recognize any keywords there. Try asking about passwords, phishing, or safe browsing!",
+        "I'm still learning! Could you specify your query using simpler terms or terms related to cyber safety?"
     };
 
-    public string GetPhishingTip()
-    {
-        return phishingTips[random.Next(phishingTips.Count)];
-    }
-
-    public string GetPasswordTip()
-    {
-        return passwordTips[random.Next(passwordTips.Count)];
-    }
-
-    public string GetSafeBrowsingTip()
-    {
-        return safeBrowsingTips[random.Next(safeBrowsingTips.Count)];
-    }
-
-    public string GetRandomCofusedResponse()
-    {
-        return confusedResponses[random.Next(confusedResponses.Count)];
-    }
+    public string GetPhishingTip() => phishingTips[random.Next(phishingTips.Count)];
+    public string GetPasswordTip() => passwordTips[random.Next(passwordTips.Count)];
+    public string GetSafeBrowsingTip() => safeBrowsingTips[random.Next(safeBrowsingTips.Count)];
+    public string GetRandomCofusedResponse() => confusedResponses[random.Next(confusedResponses.Count)];
 
     public string CheckKeywords(string input)
     {
-        foreach (var keyword in keywordResponses)
+        foreach (var keyword in keywordResponses.Keys)
         {
-            if (input.Contains(keyword.Key))
+            if (input.Contains(keyword))
             {
-                return keyword.Value;
+                return keywordResponses[keyword];
             }
         }
         return null;
@@ -95,9 +72,11 @@ public class CyberTips
 
     public string Sentiment(string input)
     {
+        input = input.ToLower();
+
         if (input.Contains("worried") || input.Contains("scared") ||
-            input.Contains("anxious") || input.Contains("afraid") ||
-            input.Contains("nervous") || input.Contains("unsafe"))
+            input.Contains("afraid") || input.Contains("hacked") ||
+            input.Contains("compromised") || input.Contains("stolen"))
             return "worried";
 
         if (input.Contains("confused") || input.Contains("lost") ||
