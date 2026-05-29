@@ -38,3 +38,4 @@ C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PAR
 C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.csproj.CoreCompileInputs.cache
 C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.exe
 C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\obj\Debug\CyberGuard.pdb
+C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\bin\Debug\greet.wav

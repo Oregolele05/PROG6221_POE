@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.IO;
 using System.Media;
 using System.Windows.Forms;
 
@@ -9,73 +10,102 @@ namespace CyberGuard
     {
         protected RichTextBox ChatDisplay { get; set; }
 
+        // Core Theme Colors mapping your CSS properties
+        private readonly Color _themeBgColor = Color.FromArgb(30, 30, 30);    // CSS #1E1E1E (Dark Gray)
+        private readonly Color _primaryRed = Color.FromArgb(230, 57, 70);    // CSS #E63946 (Cyber Red)
+        private readonly Color _secondaryOrange = Color.FromArgb(255, 140, 66); // CSS #FF8C42 (Neon Orange)
+        private readonly Color _lightTextColor = Color.FromArgb(237, 237, 237); // CSS #EDEDED (Bright Text)
+
         public void VoiceGreeting()
         {
             try
             {
-                SoundPlayer player = new SoundPlayer(@"C:\Users\gmkin\source\repos\Oregolele05\PROG6221_POE\PROG6221_POE\ASSIGNMENT\PART2\CyberGuard\greet.wav");
-                player.Play();
+                // Finds the bin\Debug or output folder dynamically
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string soundPath = Path.Combine(baseDir, "greet.wav");
+
+                if (File.Exists(soundPath))
+                {
+                    using (SoundPlayer player = new SoundPlayer(soundPath))
+                    {
+                        player.Play();
+                    }
+                }
             }
             catch (Exception ex)
             {
-                BotWarn("Error playing sound: " + ex.Message);
+                // System fallback if file access fails
+                SystemSounds.Asterisk.Play();
             }
         }
 
+        // Bot Box - Styled with sleek, rounded arc corners and locked Dark Background
         public void BotSay(string message)
-            => DisplayMessage("🤖  " + message, Color.FromArgb(230, 57, 70));
+        {
+            string rawText = "🤖 Bot: " + message;
+            int width = rawText.Length + 2;
+
+            DisplayMessage("╭" + new string('─', width) + "╮", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("│ " + rawText + " │", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("╰" + new string('─', width) + "╯", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
+        }
 
         public void BotWarn(string message)
-            => DisplayMessage("⚠   " + message, Color.FromArgb(230, 57, 70));
+            => DisplayMessage("⚠   " + message, _primaryRed, _themeBgColor, HorizontalAlignment.Left);
 
         public void BotHeader(string message)
-            => DisplayMessage("\n══════ " + message + " ══════", Color.FromArgb(255, 140, 66));
+            => DisplayMessage("\n══════ " + message + " ══════", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
 
         public void BotInfo(string message)
-            => DisplayMessage("     " + message, Color.FromArgb(230, 57, 70));
+            => DisplayMessage("     " + message, _primaryRed, _themeBgColor, HorizontalAlignment.Left);
 
+        // User Box - Styled with sleek, rounded arc corners and locked Dark Background
         public void UserSay(string message)
-            => DisplayMessage("👤  " + message, Color.FromArgb(179, 179, 179));
+        {
+            string rawText = "You: " + message + " 👤";
+            int width = rawText.Length + 2;
 
-        // Restored to your original BotLine color
+            DisplayMessage("╭" + new string('─', width) + "╮", _secondaryOrange, _themeBgColor, HorizontalAlignment.Right);
+            DisplayMessage("│ " + rawText + " │", _secondaryOrange, _themeBgColor, HorizontalAlignment.Right);
+            DisplayMessage("╰" + new string('─', width) + "╯", _secondaryOrange, _themeBgColor, HorizontalAlignment.Right);
+        }
+
+        // Divider Line - Explicitly painted over the dark background to prevent any white streaks
         public void BotLine()
-            => DisplayMessage("───────────────────────────────────────────────────────────────────────────────────────────────────────", Color.FromArgb(230, 57, 70));
+            => DisplayMessage("────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
 
-        // Restored to your exact original line-art logo style, perfectly centered
-        // FIXED: Removed SelectionAlignment centering to fix the skewed frame borders. 
-        // Uses consistent string lengths and precise padding spaces to center beautifully.
+        // Header Logo - Fully isolated inside the dark color scheme properties
         public void LogoDisplay()
         {
-            Color orangeAccent = Color.FromArgb(255, 140, 66);
-            Color redAccent = Color.FromArgb(230, 57, 70);
-            Color lightText = Color.FromArgb(237, 237, 237);
+            if (ChatDisplay == null) return;
 
-            // Slightly optimized margins specifically balanced for a clean look in Consolas 11pt
-            DisplayMessage("", orangeAccent);
-            DisplayMessage("  ╔═════════════════════════════════════════════════════════════════════════════════╗", orangeAccent);
-            DisplayMessage("  ║    ____ _  _ ___  ____ ____ ____ _  _ ____ ____ ___                             ║", redAccent);
-            DisplayMessage("  ║    |    |__| |__] |___ |__/ | __ |  | |__| |__/ |  \\                            ║", redAccent);
-            DisplayMessage("  ║    |___  ||  |__] |___ |  \\ |__] |__| |  | |  \\ |__/                            ║", redAccent);
-            DisplayMessage("  ║                                                                                 ║", orangeAccent);
-            DisplayMessage("  ║                       Cyber Awareness & Education Chatbot                       ║", lightText);
-            DisplayMessage("  ╚═════════════════════════════════════════════════════════════════════════════════╝", orangeAccent);
-            DisplayMessage("", orangeAccent);
+            DisplayMessage("", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("                 ╔═════════════════════════════════════════════════════════════════════════════════╗", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("                 ║    ____ _  _ ___  ____ ____ ____ _  _ ____ ____ ___                             ║", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("                 ║    |    |__| |__] |___ |__/ | __ |  | |__| |__/ |  \\                            ║", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("                 ║    |___ ||  |__] |___ |  \\ |__] |__| |  | |  \\ |__/                             ║", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("                 ║                                                                                 ║", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("                 ║                       Cyber Awareness & Education Chatbot                       ║", _lightTextColor, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("                 ╚═════════════════════════════════════════════════════════════════════════════════╝", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
         }
 
         public void Box(string text)
         {
-            Color orangeAccent = Color.FromArgb(255, 140, 66);
             int width = text.Length + 2;
-            DisplayMessage("╔" + new string('═', width) + "╗", orangeAccent);
-            DisplayMessage("║ " + text + " ║", orangeAccent);
-            DisplayMessage("╚" + new string('═', width) + "╝", orangeAccent);
+            DisplayMessage("╭" + new string('─', width) + "╮", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("│ " + text + " │", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("╰" + new string('─', width) + "╯", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
         }
 
-        public void DisplayMessage(string message, Color colour)
+        // Standard Message Painter Handler Configuration
+        public void DisplayMessage(string message, Color textColour, Color textBgColour, HorizontalAlignment alignment)
         {
             if (ChatDisplay == null) return;
 
-            ChatDisplay.SelectionColor = colour;
+            ChatDisplay.SelectionAlignment = alignment;
+            ChatDisplay.SelectionColor = textColour;
+            ChatDisplay.SelectionBackColor = textBgColour; // Explicitly sets the behind-text color to eliminate white highlights
             ChatDisplay.AppendText(message + "\n");
             ChatDisplay.ScrollToCaret();
         }

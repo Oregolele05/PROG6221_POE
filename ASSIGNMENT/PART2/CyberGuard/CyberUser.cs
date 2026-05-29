@@ -1,41 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
-public class CyberUser
+namespace CyberGuard
 {
-    public string username = string.Empty;
-    public string lastTopic = string.Empty;
-    public string favTopic = string.Empty;
-
-    public string Section { get; set; } = "getname";
-
-    public List<string> topicsViewed = new List<string>();
-
-    public Dictionary<string, int> topicCount = new Dictionary<string, int>();
-
-    public void TrackTopic(string topic)
+    public class CyberUser
     {
-        if (!topicsViewed.Contains(topic))
+        public string username { get; set; } = "User";
+        public string Section { get; set; } = "getname";
+        public string lastTopic { get; set; } = "";
+        public string favTopic { get; set; } = "";
+
+        // Engagement Analytics
+        public int QuestionCount { get; set; } = 0;
+        public DateTime TopicStartTime { get; set; } = DateTime.Now;
+        public Dictionary<string, TimeSpan> TopicDurations { get; set; } = new Dictionary<string, TimeSpan>();
+
+        public void TrackTopic(string newTopic)
         {
-            topicsViewed.Add(topic);
-        }
-        if (topicCount.ContainsKey(topic))
-        {
-            topicCount[topic]++;
-        }
-        else
-        {
-            topicCount[topic] = 1;
-        }
-        int max = 0;
-        foreach (var count in topicCount)
-        {
-            if (count.Value > max)
+            // 1. Calculate and save elapsed time for the previous topic before changing state
+            if (!string.IsNullOrEmpty(lastTopic))
             {
-                max = count.Value;
-                favTopic = count.Key;
+                TimeSpan duration = DateTime.Now - TopicStartTime;
+                if (TopicDurations.ContainsKey(lastTopic))
+                {
+                    TopicDurations[lastTopic] += duration;
+                }
+                else
+                {
+                    TopicDurations[lastTopic] = duration;
+                }
             }
-            lastTopic = topic;
+
+            lastTopic = newTopic;
+            // 2. Transition state configurations to the new active topic
+            if (TopicDurations.Count > 0)
+            {
+                favTopic = TopicDurations.OrderByDescending(x => x.Value).First().Key;
+            }
+            else if (!string.IsNullOrEmpty(newTopic))
+            {
+                favTopic = newTopic;
+            }
+
+            TopicStartTime = DateTime.Now; // Reset track clock timer
         }
     }
 }
