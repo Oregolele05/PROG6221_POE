@@ -1,26 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\",
+  "WorkspaceRootPath": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART2\\CyberGuard\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\file.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART2\\CyberGuard\\file.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\Cyber.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART2\\CyberGuard\\Cyber.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\CyberDesign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART2\\CyberGuard\\CyberDesign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberChatDisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART3\\CyberGuard\\CyberChatDisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\CyberForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART2\\CyberGuard\\CyberForm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberSpace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART3\\CyberGuard\\CyberSpace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberDesign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART3\\CyberGuard\\CyberDesign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberUser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART3\\CyberGuard\\CyberUser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberTips.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART3\\CyberGuard\\CyberTips.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ASSIGNMENT\\PART3\\CyberGuard\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +46,127 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml",
+              "RelativeToolTip": "ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwA4AAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-06-19T21:13:34.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\Program.cs",
-              "RelativeDocumentMoniker": "ASSIGNMENT\\PART2\\CyberGuard\\Program.cs",
-              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\Program.cs",
-              "RelativeToolTip": "ASSIGNMENT\\PART2\\CyberGuard\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\Program.cs",
+              "RelativeDocumentMoniker": "ASSIGNMENT\\PART3\\CyberGuard\\Program.cs",
+              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\Program.cs",
+              "RelativeToolTip": "ASSIGNMENT\\PART3\\CyberGuard\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T20:10:14.419Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "file.cs",
-              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\file.cs",
-              "RelativeDocumentMoniker": "ASSIGNMENT\\PART2\\CyberGuard\\file.cs",
-              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\file.cs",
-              "RelativeToolTip": "ASSIGNMENT\\PART2\\CyberGuard\\file.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T20:10:13.22Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Cyber.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\Cyber.Designer.cs",
-              "RelativeDocumentMoniker": "ASSIGNMENT\\PART2\\CyberGuard\\Cyber.Designer.cs",
-              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\Cyber.Designer.cs",
-              "RelativeToolTip": "ASSIGNMENT\\PART2\\CyberGuard\\Cyber.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T20:09:59.857Z",
+              "WhenOpened": "2026-06-19T21:11:14.548Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "CyberDesign.cs",
-              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\CyberDesign.cs",
-              "RelativeDocumentMoniker": "ASSIGNMENT\\PART2\\CyberGuard\\CyberDesign.cs",
-              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\CyberDesign.cs",
-              "RelativeToolTip": "ASSIGNMENT\\PART2\\CyberGuard\\CyberDesign.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "CyberChatDisplay.cs",
+              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberChatDisplay.cs",
+              "RelativeDocumentMoniker": "ASSIGNMENT\\PART3\\CyberGuard\\CyberChatDisplay.cs",
+              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberChatDisplay.cs",
+              "RelativeToolTip": "ASSIGNMENT\\PART3\\CyberGuard\\CyberChatDisplay.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T20:09:58.464Z",
+              "WhenOpened": "2026-06-19T21:10:50.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CyberTips.cs",
+              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberTips.cs",
+              "RelativeDocumentMoniker": "ASSIGNMENT\\PART3\\CyberGuard\\CyberTips.cs",
+              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberTips.cs",
+              "RelativeToolTip": "ASSIGNMENT\\PART3\\CyberGuard\\CyberTips.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAmwHsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T21:10:28.005Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CyberUser.cs",
+              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberUser.cs",
+              "RelativeDocumentMoniker": "ASSIGNMENT\\PART3\\CyberGuard\\CyberUser.cs",
+              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberUser.cs",
+              "RelativeToolTip": "ASSIGNMENT\\PART3\\CyberGuard\\CyberUser.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAmwFQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T21:10:12.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CyberDesign.cs",
+              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberDesign.cs",
+              "RelativeDocumentMoniker": "ASSIGNMENT\\PART3\\CyberGuard\\CyberDesign.cs",
+              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberDesign.cs",
+              "RelativeToolTip": "ASSIGNMENT\\PART3\\CyberGuard\\CyberDesign.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAmwHsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T21:09:58.96Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "CyberForm.cs",
-              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\CyberForm.cs",
-              "RelativeDocumentMoniker": "ASSIGNMENT\\PART2\\CyberGuard\\CyberForm.cs",
-              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\PROG6221_POE\\ASSIGNMENT\\PART2\\CyberGuard\\CyberForm.cs",
-              "RelativeToolTip": "ASSIGNMENT\\PART2\\CyberGuard\\CyberForm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "CyberSpace.cs",
+              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberSpace.cs",
+              "RelativeDocumentMoniker": "ASSIGNMENT\\PART3\\CyberGuard\\CyberSpace.cs",
+              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\CyberSpace.cs",
+              "RelativeToolTip": "ASSIGNMENT\\PART3\\CyberGuard\\CyberSpace.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABICAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T20:09:55.395Z",
+              "WhenOpened": "2026-06-19T20:41:55.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml.cs",
+              "RelativeToolTip": "ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAkwG8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-19T20:40:39.368Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\gmkin\\source\\repos\\Oregolele05\\PROG6221_POE\\ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml",
+              "RelativeToolTip": "ASSIGNMENT\\PART3\\CyberGuard\\MainWindow.xaml",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAvwIsAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-06-19T20:39:13.01Z",
               "EditorCaption": ""
             }
           ]
