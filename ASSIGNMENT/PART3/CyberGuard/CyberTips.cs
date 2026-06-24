@@ -30,7 +30,11 @@ namespace CyberGuard
             { "https",     "Always check for HTTPS and a padlock icon in the address bar before entering personal info." },
             { "vpn",       "A VPN encrypts your internet connection and hides your IP address. Use one on public Wi-Fi." },
             { "wifi",      "Avoid using public Wi-Fi for sensitive transactions like online banking unless you are using a trusted VPN." },
-            { "malware",   "Malware stands for malicious software. Install reputable anti-virus programs and keep them updated to defend your system." }
+            { "malware",   "Malware stands for malicious software. Install reputable anti-virus programs and keep them updated to defend your system." },
+            { "task", "You can manage tasks by saying 'add task <title>', 'show tasks', 'complete task <id>', etc." },
+            { "reminder", "You can set a reminder by saying 'set reminder <id> in <days> days' or during task creation." },
+            { "quiz", "To play the cybersecurity quiz, just say 'quiz' or 'game'." },
+            { "log", "Say 'show activity log' to see recent actions." }
         };
 
         // Generic List<string> — multiple phishing tips for variety

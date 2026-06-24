@@ -1,112 +1,47 @@
 ﻿using System.Windows;
-using System.Windows.Input;
 
 namespace CyberGuard
 {
-    // ══════════════════════════════════════════════════════════════════════
-    // MainWindow — WPF UI class
-    // Creates one CyberSpace instance and routes all user input to it
-    // Contains NO chatbot logic — only UI wiring and input routing
-    // ══════════════════════════════════════════════════════════════════════
     public partial class MainWindow : Window
     {
-        // Single instance of CyberSpace — holds all chatbot logic
-        private CyberSpace space = new CyberSpace();
+        private CyberTaskManager _taskManager;
+        private CyberQuiz _quiz;
+        private CyberSpace _space;
+        private ChatControl _chatControl;
+        private TaskControl _taskControl;
+        private QuizControl _quizControl;
+        private ActivityLogControl _logControl;
+        private PasswordCheckerControl _passwordCheckerControl;
 
-        // ── Constructor ───────────────────────────────────────────────────
         public MainWindow()
         {
             InitializeComponent();
 
-            // Inject WPF RichTextBox wrapper into CyberSpace
-            space.Initialise(new WpfChatDisplay(chatBox));
+            _taskManager = new CyberTaskManager();
+            _taskManager.Initialise();
 
-            // Play voice greeting on startup
-            space.VoiceGreeting();
+            _quiz = new CyberQuiz();
+            _space = new CyberSpace(_taskManager, _quiz);
 
-            // Show the welcome screen and logo
-            space.WelcomeScreen();
+            _chatControl = new ChatControl(_space);
+            _taskControl = new TaskControl(_taskManager);
+            _quizControl = new QuizControl(_quiz);
+            _logControl = new ActivityLogControl();
+            _passwordCheckerControl = new PasswordCheckerControl();
 
-            // Focus input box so user can type immediately
-            txtInput.Focus();
+            // Hook Back to Chat events
+            _taskControl.BackToChatRequested += (s, e) => MainContent.Content = _chatControl;
+            _quizControl.BackToChatRequested += (s, e) => MainContent.Content = _chatControl;
+            _logControl.BackToChatRequested += (s, e) => MainContent.Content = _chatControl;
+            _passwordCheckerControl.BackToChatRequested += (s, e) => MainContent.Content = _chatControl;
+
+            MainContent.Content = _chatControl;
         }
 
-        // ── Send Button ───────────────────────────────────────────────────
-        // Fires when user clicks SEND
-        private void btnSend_Click(object sender, RoutedEventArgs e)
-        {
-            string input = txtInput.Text.Trim();
-            if (string.IsNullOrWhiteSpace(input)) return;
-
-            // Show user's message in chat
-            space.UserSay(input);
-            txtInput.Clear();
-
-            // Route to correct CyberSpace handler
-            HandleInput(input);
-        }
-
-        // ── Enter Key ─────────────────────────────────────────────────────
-        // Pressing Enter fires the same as clicking SEND
-        private void txtInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                btnSend_Click(sender, null);
-                e.Handled = true;
-            }
-        }
-
-        // ── Input Router ──────────────────────────────────────────────────
-        // Reads CurrentSection from CyberSpace and calls the correct method
-        // MainWindow has no chatbot logic — it only routes input here
-        private void HandleInput(string input)
-        {
-            string lower = input.ToLower();
-
-            switch (space.CurrentSection)
-            {
-                case "getname":
-                    // Pass original — name should keep its capitalisation
-                    space.UserInteraction(input);
-                    break;
-
-                case "main":
-                    space.ResponseSystem(lower);
-                    break;
-
-                case "topicmenu":
-                    space.HandleTopicMenu(lower);
-                    break;
-
-                case "password":
-                    space.HandlePassword(lower);
-                    break;
-
-                case "phishing":
-                    space.HandlePhishing(lower);
-                    break;
-
-                case "safebrowsing":
-                    space.HandleSafeBrowsing(lower);
-                    break;
-
-                case "goodbye":
-                    DisableInput();
-                    break;
-            }
-
-            // Disable input after goodbye
-            if (space.CurrentSection == "goodbye")
-                DisableInput();
-        }
-
-        // ── Disable Input ─────────────────────────────────────────────────
-        // Called after goodbye — prevents typing after session ends
-        private void DisableInput()
-        {
-            txtInput.IsEnabled = false;
-            btnSend.IsEnabled = false;
-        }
+        private void ChatButton_Click(object sender, RoutedEventArgs e) => MainContent.Content = _chatControl;
+        private void TasksButton_Click(object sender, RoutedEventArgs e) => MainContent.Content = _taskControl;
+        private void QuizButton_Click(object sender, RoutedEventArgs e) => MainContent.Content = _quizControl;
+        private void LogButton_Click(object sender, RoutedEventArgs e) => MainContent.Content = _logControl;
+        private void PasswordCheckerButton_Click(object sender, RoutedEventArgs e) => MainContent.Content = _passwordCheckerControl;
     }
 }

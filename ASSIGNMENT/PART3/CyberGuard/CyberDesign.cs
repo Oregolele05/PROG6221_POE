@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Media;
+using System.Windows.Forms;
 
 namespace CyberGuard
 {
@@ -13,7 +14,7 @@ namespace CyberGuard
     public class CyberDesign
     {
         // WPF chat display wrapper — set by CyberSpace.Initialise()
-        protected WpfChatDisplay ChatDisplay { get; set; }
+        protected CyberChatDisplay ChatDisplay { get; set; }
 
         // ── Core Theme Colors (matching original WinForms design) ─────────
         private readonly Color _themeBgColor = Color.FromArgb(30, 30, 30);     // #1E1E1E Dark Gray
@@ -45,8 +46,7 @@ namespace CyberGuard
 
         // ── Core Display Method ───────────────────────────────────────────
         // All output goes through here — appends coloured text to chat display
-        public void DisplayMessage(string message, Color textColour, Color textBgColour,
-                                   System.Windows.Forms.HorizontalAlignment alignment)
+        public void DisplayMessage(string message, Color textColour, Color textBgColour, HorizontalAlignment alignment)
         {
             if (ChatDisplay == null) return;
             ChatDisplay.AppendText(message, textColour, textBgColour, alignment);
@@ -58,25 +58,25 @@ namespace CyberGuard
         {
             string rawText = "🤖 Bot: " + message;
             int width = rawText.Length + 2;
-            DisplayMessage("╭" + new string('─', width) + "╮", _primaryRed, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
-            DisplayMessage("│ " + rawText + " │", _primaryRed, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
-            DisplayMessage("╰" + new string('─', width) + "╯", _primaryRed, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
+            DisplayMessage("╭" + new string('─', width) + "╮", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("│ " + rawText + " │", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("╰" + new string('─', width) + "╯", _primaryRed, _themeBgColor, HorizontalAlignment.Left);
         }
 
         // ── BotWarn ───────────────────────────────────────────────────────
         // Warning message — red, left aligned
         public void BotWarn(string message)
-            => DisplayMessage("⚠   " + message, _primaryRed, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
+            => DisplayMessage("⚠   " + message, _primaryRed, _themeBgColor, HorizontalAlignment.Left);
 
         // ── BotHeader ─────────────────────────────────────────────────────
         // Section header — orange, left aligned
         public void BotHeader(string message)
-            => DisplayMessage("\n══════ " + message + " ══════", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
+            => DisplayMessage("\n══════ " + message + " ══════", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
 
         // ── BotInfo ───────────────────────────────────────────────────────
         // Info bullet — red, left aligned
         public void BotInfo(string message)
-            => DisplayMessage("     " + message, _primaryRed, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
+            => DisplayMessage("     " + message, _primaryRed, _themeBgColor, HorizontalAlignment.Left);
 
         // ── UserSay ───────────────────────────────────────────────────────
         // User message in styled box — orange, right aligned
@@ -84,9 +84,9 @@ namespace CyberGuard
         {
             string rawText = "You: " + message + " 👤";
             int width = rawText.Length + 2;
-            DisplayMessage("╭" + new string('─', width) + "╮", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Right);
-            DisplayMessage("│ " + rawText + " │", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Right);
-            DisplayMessage("╰" + new string('─', width) + "╯", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Right);
+            DisplayMessage("╭" + new string('─', width) + "╮", _secondaryOrange, _themeBgColor,HorizontalAlignment.Right);
+            DisplayMessage("│ " + rawText + " │", _secondaryOrange, _themeBgColor, HorizontalAlignment.Right);
+            DisplayMessage("╰" + new string('─', width) + "╯", _secondaryOrange, _themeBgColor, HorizontalAlignment.Right);
         }
 
         // ── BotLine ───────────────────────────────────────────────────────
@@ -101,14 +101,14 @@ namespace CyberGuard
         {
             if (ChatDisplay == null) return;
             DisplayMessage("", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
-            DisplayMessage("                    ╔═════════════════════════════════════════════════════════════════════════════════╗", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Center);
-            DisplayMessage("                    ║              ____ _  _ ___  ____ ____ ____ _  _ ____ ____ ___                   ║", _primaryRed, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Center);
-            DisplayMessage("                    ║              |    |__| |__] |___ |__/ | __ |  | |__| |__/ |  \\                  ║", _primaryRed, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Center);
-            DisplayMessage("                    ║              |___  ||  |__] |___ |  \\ |__] |__| |  | |  \\ |__/                  ║", _primaryRed, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Center);
-            DisplayMessage("                    ║                                                                                 ║", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Center);
-            DisplayMessage("                    ║                       Cyber Awareness & Education Chatbot                       ║", _lightTextColor, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Center);
-            DisplayMessage("                    ╚═════════════════════════════════════════════════════════════════════════════════╝", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Center);
-            DisplayMessage("", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
+            DisplayMessage("                    ╔═════════════════════════════════════════════════════════════════════════════════╗", _secondaryOrange, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║              ____ _  _ ___  ____ ____ ____ _  _ ____ ____ ___                   ║", _primaryRed, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║              |    |__| |__] |___ |__/ | __ |  | |__| |__/ |  \\                  ║", _primaryRed, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║              |___  ||  |__] |___ |  \\ |__] |__| |  | |  \\ |__/                  ║", _primaryRed, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║                                                                                 ║", _secondaryOrange, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ║                       Cyber Awareness & Education Chatbot                       ║", _lightTextColor, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("                    ╚═════════════════════════════════════════════════════════════════════════════════╝", _secondaryOrange, _themeBgColor, HorizontalAlignment.Center);
+            DisplayMessage("", _secondaryOrange, _themeBgColor,     HorizontalAlignment.Left);
         }
 
         // ── Box ───────────────────────────────────────────────────────────
@@ -116,9 +116,9 @@ namespace CyberGuard
         public void Box(string text)
         {
             int width = text.Length + 2;
-            DisplayMessage("╭" + new string('─', width) + "╮", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
-            DisplayMessage("│ " + text + " │", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
-            DisplayMessage("╰" + new string('─', width) + "╯", _secondaryOrange, _themeBgColor, System.Windows.Forms.HorizontalAlignment.Left);
+            DisplayMessage("╭" + new string('─', width) + "╮", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("│ " + text + " │", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
+            DisplayMessage("╰" + new string('─', width) + "╯", _secondaryOrange, _themeBgColor, HorizontalAlignment.Left);
         }
     }
 }

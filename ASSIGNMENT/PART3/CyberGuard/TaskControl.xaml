@@ -1,0 +1,48 @@
+<UserControl x:Class="CyberGuard.TaskControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#1E1E1E" Padding="5">
+            <Label Content="📋 TASK MANAGER" Foreground="#FF8C42" FontWeight="Bold" FontSize="14"/>
+        </Border>
+
+        <ListView x:Name="lvTasks" Grid.Row="1" Margin="0,5" Background="#1E1E1E" Foreground="#EDEDED"
+                  SelectionMode="Single">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="40" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Title" Width="150" DisplayMemberBinding="{Binding Title}"/>
+                    <GridViewColumn Header="Description" Width="200" DisplayMemberBinding="{Binding Description}"/>
+                    <GridViewColumn Header="Reminder" Width="100" DisplayMemberBinding="{Binding ReminderDisplay}"/>
+                    <GridViewColumn Header="Status" Width="80" DisplayMemberBinding="{Binding StatusDisplay}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,5">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <Label Content="Title:" Foreground="#E63946" FontWeight="Bold"/>
+                <TextBox x:Name="txtTitle" Width="150" Style="{StaticResource InputBox}" Margin="5,0"/>
+                <Label Content="Description:" Foreground="#E63946" FontWeight="Bold" Margin="10,0,0,0"/>
+                <TextBox x:Name="txtDesc" Width="200" Style="{StaticResource InputBox}" Margin="5,0"/>
+                <Label Content="Reminder:" Foreground="#E63946" FontWeight="Bold" Margin="10,0,0,0"/>
+                <DatePicker x:Name="dpReminder" Width="120" Margin="5,0" Background="#1E1E1E" Foreground="#EDEDED"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="➕ Add Task" Style="{StaticResource SendBtn}" Click="AddTask_Click" Margin="5"/>
+                <Button Content="✅ Complete" Style="{StaticResource SendBtn}" Click="CompleteTask_Click" Margin="5"/>
+                <Button Content="❌ Delete" Style="{StaticResource SendBtn}" Click="DeleteTask_Click" Margin="5"/>
+                <Button Content="⏰ Set Reminder" Style="{StaticResource SendBtn}" Click="SetReminder_Click" Margin="5"/>
+                <Button Content="🔄 Refresh" Style="{StaticResource SendBtn}" Click="Refresh_Click" Margin="5"/>
+                <Button Content="⬅ Back to Chat" Style="{StaticResource SendBtn}" Click="BackToChat_Click" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

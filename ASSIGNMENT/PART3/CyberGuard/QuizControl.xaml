@@ -1,0 +1,35 @@
+<UserControl x:Class="CyberGuard.QuizControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="10" Background="#1E1E1E">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#1E1E1E" Padding="5">
+            <Label Content="🎮 CYBER QUIZ" Foreground="#FF8C42" FontWeight="Bold" FontSize="14"/>
+        </Border>
+
+        <StackPanel Grid.Row="1" Margin="0,10">
+            <TextBlock x:Name="lblQuestion" Foreground="#EDEDED" FontSize="16" FontWeight="Bold" TextWrapping="Wrap"/>
+            <StackPanel x:Name="OptionsPanel" Margin="0,10"/>
+        </StackPanel>
+
+        <Button x:Name="btnSubmit" Grid.Row="2" Content="Submit Answer" Style="{StaticResource SendBtn}"
+                Width="150" HorizontalAlignment="Center" Click="Submit_Click" Margin="0,5" IsEnabled="False"/>
+
+        <TextBlock x:Name="lblFeedback" Grid.Row="3" Foreground="#FF8C42" FontSize="14" TextWrapping="Wrap" Margin="0,5"/>
+
+        <StackPanel Grid.Row="4" VerticalAlignment="Bottom" Margin="0,10">
+            <TextBlock x:Name="lblScore" Foreground="#EDEDED" FontSize="14"/>
+            <Button x:Name="btnStart" Content="Start New Quiz" Style="{StaticResource SendBtn}"
+                    Width="150" HorizontalAlignment="Center" Click="StartQuiz_Click" Margin="0,10"/>
+            <Button Content="⬅ Back to Chat" Style="{StaticResource SendBtn}"
+                    Width="150" HorizontalAlignment="Center" Click="BackToChat_Click" Margin="0,5"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

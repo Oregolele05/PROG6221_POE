@@ -24,8 +24,8 @@ namespace CyberGuard
         public string CurrentSection => user.Section;
 
         // ── Initialise ────────────────────────────────────────────────────
-        // Injects WpfChatDisplay so CyberDesign.DisplayMessage() can write
-        public void Initialise(WpfChatDisplay chatDisplay)
+        // Injects CyberChatDisplay so CyberDesign.DisplayMessage() can write
+        public void Initialise(CyberChatDisplay chatDisplay)
         {
             ChatDisplay = chatDisplay;
         }
