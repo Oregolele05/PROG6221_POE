@@ -3,36 +3,34 @@ using System.Linq;
 
 namespace CyberGuard
 {
-    // ══════════════════════════════════════════════════════════════════════
+    
     // DELEGATE — used for random tip selection throughout CyberSpace
-    // ══════════════════════════════════════════════════════════════════════
     public delegate string TipProvider();
 
-    // ══════════════════════════════════════════════════════════════════════
-    // CyberSpace — all chatbot logic
-    // Inherits CyberDesign → BotSay, BotInfo, Box, LogoDisplay etc.
-    // Uses CyberUser       → memory: username, section, topic tracking
-    // Uses CyberTips       → keywords, tips, sentiment
-    // MainWindow creates one instance and calls its public methods
-    // ══════════════════════════════════════════════════════════════════════
+    
     public class CyberSpace : CyberDesign
     {
         private CyberUser user = new CyberUser();
         private CyberTips tips = new CyberTips();
 
-        // Read by MainWindow switch to route input to the right handler
+        
         public string CurrentSection => user.Section;
 
-        // ── Initialise ────────────────────────────────────────────────────
-        // Injects CyberChatDisplay so CyberDesign.DisplayMessage() can write
+        
+        private CyberTaskManager _taskManager;
+        private CyberQuiz _quiz;
+
+        public CyberSpace(CyberTaskManager taskManager, CyberQuiz quiz)
+        {
+            _taskManager = taskManager;
+            _quiz = quiz;
+        }
         public void Initialise(CyberChatDisplay chatDisplay)
         {
             ChatDisplay = chatDisplay;
         }
 
-        // ══════════════════════════════════════════════════════════════════
-        // WELCOME SCREEN
-        // ══════════════════════════════════════════════════════════════════
+        
         public void WelcomeScreen()
         {
             LogoDisplay();
@@ -42,9 +40,8 @@ namespace CyberGuard
             user.Section = "getname";
         }
 
-        // ══════════════════════════════════════════════════════════════════
+        
         // USER INTERACTION — validates and stores the user's name
-        // ══════════════════════════════════════════════════════════════════
         public void UserInteraction(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
@@ -72,9 +69,7 @@ namespace CyberGuard
             ShowMainMenu();
         }
 
-        // ══════════════════════════════════════════════════════════════════
         // MAIN MENU
-        // ══════════════════════════════════════════════════════════════════
         public void ShowMainMenu()
         {
             // Flush time metrics when leaving a topic section
@@ -89,9 +84,7 @@ namespace CyberGuard
             BotInfo("4. Exit");
         }
 
-        // ══════════════════════════════════════════════════════════════════
         // RESPONSE SYSTEM — handles all main menu input
-        // ══════════════════════════════════════════════════════════════════
         public void ResponseSystem(string input)
         {
             string cleanInput = input.ToLower().Trim();
@@ -180,9 +173,7 @@ namespace CyberGuard
             }
         }
 
-        // ══════════════════════════════════════════════════════════════════
         // FOLLOW-UP HANDLER
-        // ══════════════════════════════════════════════════════════════════
         public void HandleFollowUp()
         {
             if (string.IsNullOrEmpty(user.lastTopic))
@@ -204,9 +195,7 @@ namespace CyberGuard
             BotInfo(getTip());
         }
 
-        // ══════════════════════════════════════════════════════════════════
         // TOPIC MENU
-        // ══════════════════════════════════════════════════════════════════
         public void ShowTopicMenu()
         {
             user.Section = "topicmenu";
@@ -234,9 +223,7 @@ namespace CyberGuard
                 BotWarn("I didn't quite understand that. Could you try choosing options 1 through 4?");
         }
 
-        // ══════════════════════════════════════════════════════════════════
         // PASSWORD SAFETY
-        // ══════════════════════════════════════════════════════════════════
         public void ShowPasswordMenu()
         {
             user.Section = "password";
@@ -321,9 +308,7 @@ namespace CyberGuard
             BotSay("Select another option (1-7) or type 'back' to return.");
         }
 
-        // ══════════════════════════════════════════════════════════════════
         // PHISHING
-        // ══════════════════════════════════════════════════════════════════
         public void ShowPhishingMenu()
         {
             user.Section = "phishing";
@@ -408,9 +393,7 @@ namespace CyberGuard
             BotSay("Select another option (1-7) or type 'back' to return.");
         }
 
-        // ══════════════════════════════════════════════════════════════════
         // SAFE BROWSING
-        // ══════════════════════════════════════════════════════════════════
         public void ShowSafeBrowsingMenu()
         {
             user.Section = "safebrowsing";
@@ -500,9 +483,8 @@ namespace CyberGuard
             BotSay("Select another option (1-7) or type 'back' to return.");
         }
 
-        // ══════════════════════════════════════════════════════════════════
+        
         // GOODBYE — session summary with engagement analytics
-        // ══════════════════════════════════════════════════════════════════
         public void ShowGoodbye()
         {
             // Flush remaining time metrics before termination

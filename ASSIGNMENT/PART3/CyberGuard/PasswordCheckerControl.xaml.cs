@@ -15,9 +15,9 @@ namespace CyberGuard
             InitializeComponent();
         }
 
-        private void txtPassword_TextChanged(object sender, TextChangedEventArgs e)
+        private void TxtPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            string pwd = txtPassword.Text;
+            string pwd = txtPassword.Password;
             if (string.IsNullOrEmpty(pwd))
             {
                 strengthBar.Value = 0;

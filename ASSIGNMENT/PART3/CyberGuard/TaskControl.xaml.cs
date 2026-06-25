@@ -6,7 +6,7 @@ namespace CyberGuard
 {
     public partial class TaskControl : UserControl
     {
-        private CyberTaskManager _taskManager;
+        private readonly CyberTaskManager _taskManager;
         public event EventHandler BackToChatRequested;
 
         public TaskControl(CyberTaskManager taskManager)

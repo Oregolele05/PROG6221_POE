@@ -6,15 +6,16 @@ namespace CyberGuard
 {
     public class CyberTaskManager
     {
-        // Update password if needed
-        private const string ConnectionString = "Server=localhost;Database=cyberguard_db;Uid=root;Pwd=;";
+        // Update password if you set one during MySQL installation
+        private const string ConnectionString = "Server=localhost;Database=cyberguard_db;Uid=root;Pwd=*Om270805@";
 
         public void Initialise()
         {
             try
             {
+                // Use backticks (`) or no quotes for database name – never single quotes.
                 string createDb = "CREATE DATABASE IF NOT EXISTS cyberguard_db;";
-                using (var conn = new MySqlConnection("Server=localhost;Uid=root;Pwd=;"))
+                using (var conn = new MySqlConnection("Server=localhost;Uid=root;Pwd=*Om270805@"))
                 {
                     conn.Open();
                     new MySqlCommand(createDb, conn).ExecuteNonQuery();
