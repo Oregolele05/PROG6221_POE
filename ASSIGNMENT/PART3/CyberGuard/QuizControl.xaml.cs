@@ -9,7 +9,7 @@ namespace CyberGuard
 {
     public partial class QuizControl : UserControl
     {
-        private CyberQuiz _quiz;
+        private readonly CyberQuiz _quiz;
         private QuizQuestion _currentQuestion;
         public event EventHandler BackToChatRequested;
 

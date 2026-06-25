@@ -82,7 +82,7 @@
             <Setter Property="Padding" Value="8,0"/>
         </Style>
 
-        <!-- InputBox for PasswordBox (separate key) -->
+        <!-- InputBox for PasswordBox -->
         <Style x:Key="PasswordInputBox" TargetType="PasswordBox">
             <Setter Property="Background" Value="#1E1E1E"/>
             <Setter Property="Foreground" Value="#EDEDED"/>

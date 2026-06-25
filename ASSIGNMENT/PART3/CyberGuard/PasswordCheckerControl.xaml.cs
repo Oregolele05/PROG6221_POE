@@ -21,8 +21,8 @@ namespace CyberGuard
             if (string.IsNullOrEmpty(pwd))
             {
                 strengthBar.Value = 0;
-                lblStrength.Text = "";
-                lblFeedback.Text = "";
+                lblStrength.Text = "Strength: (type a password above)";
+                lblFeedback.Text = "Suggestions will appear here as you type.";
                 return;
             }
 

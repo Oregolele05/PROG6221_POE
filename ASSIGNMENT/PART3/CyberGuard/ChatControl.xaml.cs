@@ -6,7 +6,7 @@ namespace CyberGuard
 {
     public partial class ChatControl : UserControl
     {
-        private CyberSpace _space;
+        private readonly CyberSpace _space;
 
         public ChatControl(CyberSpace space)
         {
