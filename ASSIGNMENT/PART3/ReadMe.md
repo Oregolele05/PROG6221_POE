@@ -104,7 +104,7 @@ The application uses **MySQL** to persist tasks and features a sidebar navigatio
 
 ## 📺 Presentation & Repository
 
-- **YouTube Presentation:** [https://youtu.be/your-link-here](https://youtu.be/your-link-here)
-- **GitHub Repository:** [https://github.com/yourusername/CyberGuard](https://github.com/yourusername/CyberGuard)
+- **YouTube Presentation:** https://youtu.be/LNNYVTJw_sI
+- **GitHub Repository:** 
 
 
