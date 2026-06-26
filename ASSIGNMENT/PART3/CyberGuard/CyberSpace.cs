@@ -1,36 +1,37 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace CyberGuard
 {
-    
-    // DELEGATE — used for random tip selection throughout CyberSpace
     public delegate string TipProvider();
 
-    
     public class CyberSpace : CyberDesign
     {
         private CyberUser user = new CyberUser();
         private CyberTips tips = new CyberTips();
-
-        
-        public string CurrentSection => user.Section;
-
-        
         private CyberTaskManager _taskManager;
         private CyberQuiz _quiz;
 
+        public string CurrentSection => user.Section;
+
+        // ── Constructor ──────────────────────────────────────────────
         public CyberSpace(CyberTaskManager taskManager, CyberQuiz quiz)
         {
             _taskManager = taskManager;
             _quiz = quiz;
         }
+
+        // ── Initialise ──────────────────────────────────────────────
         public void Initialise(CyberChatDisplay chatDisplay)
         {
             ChatDisplay = chatDisplay;
+            _taskManager.Initialise();
+            CyberLogger.Add("Chatbot started.");
         }
 
-        
+        // ── Welcome ──────────────────────────────────────────────────
         public void WelcomeScreen()
         {
             LogoDisplay();
@@ -40,56 +41,99 @@ namespace CyberGuard
             user.Section = "getname";
         }
 
-        
-        // USER INTERACTION — validates and stores the user's name
+        // ── User Interaction (name) ─────────────────────────────────
         public void UserInteraction(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
-            {
-                BotWarn("Please enter a valid name.");
-                return;
-            }
+            { BotWarn("Please enter a valid name."); return; }
             if (input.Any(char.IsDigit))
-            {
-                BotWarn("A name cannot contain numeric values.");
-                return;
-            }
-
+            { BotWarn("A name cannot contain numeric values."); return; }
             string invalidChars = "!@#$%^&*()_=-<>.?/\\|+][{}\":;'~`_";
             if (input.Any(ch => invalidChars.Contains(ch)))
-            {
-                BotWarn("A name cannot contain special characters (like !, @, #, etc.).");
-                return;
-            }
+            { BotWarn("A name cannot contain special characters."); return; }
 
             user.username = input.Trim();
             BotLine();
-            Box("Welcome " + user.username + " nice to meet you!!");
+            Box($"Welcome {user.username} nice to meet you!!");
             BotLine();
             ShowMainMenu();
         }
 
-        // MAIN MENU
+        // ── Main Menu ────────────────────────────────────────────────
         public void ShowMainMenu()
         {
-            // Flush time metrics when leaving a topic section
             if (user.Section == "password" || user.Section == "phishing" || user.Section == "safebrowsing")
                 user.TrackTopic("");
 
             user.Section = "main";
-            BotSay("How can I help you today, " + user.username + "?");
+            BotSay($"How can I help you today, {user.username}?");
             BotInfo("1. How are you?");
             BotInfo("2. What is your purpose?");
             BotInfo("3. What can I ask you about?");
             BotInfo("4. Exit");
+            BotInfo("(Or ask about tasks, quiz, activity log, etc.)");
         }
 
-        // RESPONSE SYSTEM — handles all main menu input
+        // ── Response System ──────────────────────────────────────────
         public void ResponseSystem(string input)
         {
             string cleanInput = input.ToLower().Trim();
 
-            // Declared favourite topic memory
+            // ── Pending action (multi-step) ─────────────────────────
+            if (!string.IsNullOrEmpty(pendingAction))
+            {
+                HandlePendingInput(cleanInput);
+                return;
+            }
+
+            // ── Quiz active ──────────────────────────────────────────
+            if (_quiz.IsActive)
+            {
+                ProcessQuizAnswer(cleanInput);
+                return;
+            }
+
+            // ── NLP: Task / Reminder / Quiz / Log commands ──────────
+            if (cleanInput.Contains("add task") || cleanInput.Contains("new task") ||
+                cleanInput.Contains("create task") || cleanInput.Contains("remind me to"))
+            {
+                HandleTaskCommand(input);
+                return;
+            }
+            if (cleanInput.Contains("show task") || cleanInput.Contains("list task") ||
+                cleanInput.Contains("view task") || cleanInput.Contains("my tasks"))
+            {
+                ShowTasks();
+                return;
+            }
+            if (cleanInput.Contains("complete task") || cleanInput.Contains("mark task"))
+            {
+                HandleCompleteTask(input);
+                return;
+            }
+            if (cleanInput.Contains("delete task") || cleanInput.Contains("remove task"))
+            {
+                HandleDeleteTask(input);
+                return;
+            }
+            if (cleanInput.Contains("set reminder") || cleanInput.Contains("remind in"))
+            {
+                HandleSetReminder(input);
+                return;
+            }
+            if (cleanInput.Contains("quiz") || cleanInput.Contains("game"))
+            {
+                StartQuiz();
+                return;
+            }
+            if (cleanInput.Contains("activity log") || cleanInput.Contains("what have you done") ||
+                cleanInput.Contains("show log") || cleanInput.Contains("recent actions"))
+            {
+                ShowActivityLog();
+                return;
+            }
+
+            // ── Declared favourite topic memory ─────────────────────
             if (cleanInput.Contains("interested in") || cleanInput.Contains("favourite topic is") || cleanInput.Contains("favorite topic is"))
             {
                 string matchedTopic = "";
@@ -106,7 +150,7 @@ namespace CyberGuard
                 }
             }
 
-            // Follow-up detection
+            // ── Follow-up detection ──────────────────────────────────
             if (cleanInput.Contains("tell me more") || cleanInput.Contains("another tip") ||
                 cleanInput.Contains("explain more") || cleanInput.Contains("more info"))
             {
@@ -118,12 +162,12 @@ namespace CyberGuard
                 return;
             }
 
-            // Favourite topic recall
+            // ── Favourite topic recall ──────────────────────────────
             if (cleanInput.Contains("favourite topic") || cleanInput.Contains("favorite topic") || cleanInput.Contains("most interested"))
             {
                 if (!string.IsNullOrEmpty(user.favTopic))
                 {
-                    string sourceContext = !string.IsNullOrEmpty(user.declaredFavTopic) ? "you stated earlier" : "calculated runtime tracking";
+                    string sourceContext = !string.IsNullOrEmpty(user.declaredFavTopic) ? "you stated earlier" : "runtime tracking";
                     BotSay($"According to {sourceContext}, your favorite topic is {user.favTopic}. Let me know if you'd like to review it!");
                 }
                 else
@@ -132,7 +176,7 @@ namespace CyberGuard
                 return;
             }
 
-            // Sentiment + keyword recognition
+            // ── Sentiment + keyword recognition ──────────────────────
             string sentiment = tips.Sentiment(input);
             string keyword = tips.CheckKeywords(input);
             if (keyword != null)
@@ -144,10 +188,10 @@ namespace CyberGuard
                 return;
             }
 
-            // Numbered menu options
+            // ── Numbered menu options ────────────────────────────────
             if (cleanInput.Contains("how are you") || cleanInput == "1" || cleanInput == "one")
             {
-                BotSay("I am doing okay I guess. Thanks for asking, " + user.username + ".");
+                BotSay($"I am doing okay I guess. Thanks for asking, {user.username}.");
                 if (!string.IsNullOrEmpty(user.favTopic))
                     BotSay($"Since your favorite topic seems to be {user.favTopic}, we could jump right back in if you're ready!");
                 ShowMainMenu();
@@ -173,7 +217,7 @@ namespace CyberGuard
             }
         }
 
-        // FOLLOW-UP HANDLER
+        // ── Follow-up Handler ────────────────────────────────────────
         public void HandleFollowUp()
         {
             if (string.IsNullOrEmpty(user.lastTopic))
@@ -183,7 +227,6 @@ namespace CyberGuard
             }
 
             BotSay("Here's another tip on " + user.lastTopic + ":");
-
             TipProvider getTip;
             string target = user.lastTopic.ToLower();
 
@@ -195,7 +238,7 @@ namespace CyberGuard
             BotInfo(getTip());
         }
 
-        // TOPIC MENU
+        // ── Topic Menu ────────────────────────────────────────────────
         public void ShowTopicMenu()
         {
             user.Section = "topicmenu";
@@ -223,7 +266,7 @@ namespace CyberGuard
                 BotWarn("I didn't quite understand that. Could you try choosing options 1 through 4?");
         }
 
-        // PASSWORD SAFETY
+        // ── Password Menu ────────────────────────────────────────────
         public void ShowPasswordMenu()
         {
             user.Section = "password";
@@ -308,7 +351,7 @@ namespace CyberGuard
             BotSay("Select another option (1-7) or type 'back' to return.");
         }
 
-        // PHISHING
+        // ── Phishing Menu ─────────────────────────────────────────────
         public void ShowPhishingMenu()
         {
             user.Section = "phishing";
@@ -393,7 +436,7 @@ namespace CyberGuard
             BotSay("Select another option (1-7) or type 'back' to return.");
         }
 
-        // SAFE BROWSING
+        // ── Safe Browsing Menu ───────────────────────────────────────
         public void ShowSafeBrowsingMenu()
         {
             user.Section = "safebrowsing";
@@ -483,31 +526,494 @@ namespace CyberGuard
             BotSay("Select another option (1-7) or type 'back' to return.");
         }
 
-        
-        // GOODBYE — session summary with engagement analytics
+        // ── Goodbye ───────────────────────────────────────────────────
         public void ShowGoodbye()
         {
-            // Flush remaining time metrics before termination
             user.TrackTopic("");
             user.Section = "goodbye";
-
             BotLine();
             Box("SESSION TERMINATED BY USER");
             BotSay("Thank you for using CyberGuard, " + user.username + "!");
-
             BotHeader("YOUR ENGAGEMENT PROFILE STATS");
             BotInfo($"Total Educational Questions Asked: {user.QuestionCount}");
             if (!string.IsNullOrEmpty(user.favTopic))
                 BotInfo($"Your Most Discussed Topic: {user.favTopic}");
             BotLine();
-
             BotInfo("Time Spent Breakdown per Topic:");
             foreach (var record in user.TopicDurations)
-            {
                 if (!string.IsNullOrEmpty(record.Key))
                     BotInfo($"• {record.Key}: {record.Value.Seconds} seconds");
-            }
             BotLine();
+        }
+
+        // ──────────────────────────────────────────────────────────────
+        // ── TASK METHODS (ENHANCED PARSING) ────────────────────────────
+        // ──────────────────────────────────────────────────────────────
+
+        private string pendingAction = "";
+        private CyberTask pendingTask = null;
+
+        private void HandleTaskCommand(string input)
+        {
+            // Try to parse title and due date
+            if (ParseTaskInput(input, out string title, out DateTime? dueDate))
+            {
+                if (string.IsNullOrEmpty(title))
+                {
+                    BotWarn("Please specify a task description.");
+                    return;
+                }
+
+                int ID = _taskManager.AddTask(title, "No description", dueDate);
+                CyberLogger.Add($"Task added: '{title}' (ID {ID})" + (dueDate.HasValue ? $" due {dueDate.Value.ToShortDateString()}" : ""));
+                BotSay($"Task added with ID {ID}: '{title}'" + (dueDate.HasValue ? $" with reminder on {dueDate.Value.ToShortDateString()}" : "."));
+                BotSay("Use 'show tasks' to view all tasks, or 'complete task <id>' to mark as done.");
+                return;
+            }
+
+            // Fallback: simple add without due date
+            string lower = input.ToLower();
+            string simpleTitle = "";
+            int start = -1;
+
+            if (lower.Contains("add task"))
+                start = lower.IndexOf("add task") + "add task".Length;
+            else if (lower.Contains("new task"))
+                start = lower.IndexOf("new task") + "new task".Length;
+            else if (lower.Contains("create task"))
+                start = lower.IndexOf("create task") + "create task".Length;
+            else if (lower.Contains("remind me to"))
+                start = lower.IndexOf("remind me to") + "remind me to".Length;
+
+            if (start >= 0 && start < input.Length)
+                simpleTitle = input.Substring(start).Trim();
+            else
+            {
+                BotWarn("I didn't understand the task. Please say: 'add task <description>' or 'add task <description> due <date>'.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(simpleTitle))
+            {
+                BotWarn("Task description is empty.");
+                return;
+            }
+
+            int id = _taskManager.AddTask(simpleTitle, "No description");
+            CyberLogger.Add($"Task added: '{simpleTitle}' (ID {id})");
+            BotSay($"Task added with ID {id}: '{simpleTitle}'. Would you like to set a reminder? (yes/no)");
+            pendingAction = "addtask";
+            pendingTask = new CyberTask { Id = id, Title = simpleTitle };
+        }
+
+        /// <summary>
+        /// Parses a user input like "Add task - Submit assignment, Due date - 26 June 2026"
+        /// Extracts title and due date.
+        /// </summary>
+        private bool ParseTaskInput(string input, out string title, out DateTime? dueDate)
+        {
+            title = "";
+            dueDate = null;
+
+            // Look for common separators: "due", "deadline", "by", "due date", "due on"
+            string[] dateKeywords = { "due date", "deadline", "due on", "by", "due" };
+            string lowerInput = input.ToLower();
+
+            int dateIndex = -1;
+            string dateKeyword = "";
+            foreach (var keyword in dateKeywords)
+            {
+                int idx = lowerInput.IndexOf(keyword);
+                if (idx != -1)
+                {
+                    dateIndex = idx;
+                    dateKeyword = keyword;
+                    break;
+                }
+            }
+
+            if (dateIndex != -1)
+            {
+                // Split into title part and date part
+                string before = input.Substring(0, dateIndex).Trim();
+                string after = input.Substring(dateIndex + dateKeyword.Length).Trim();
+
+                // Remove "add task", "new task", "create task", "remind me to" from before
+                string[] removePrefixes = { "add task", "new task", "create task", "remind me to" };
+                foreach (var prefix in removePrefixes)
+                {
+                    if (before.ToLower().Contains(prefix))
+                    {
+                        int idx2 = before.ToLower().IndexOf(prefix);
+                        before = before.Substring(idx2 + prefix.Length).Trim();
+                        break;
+                    }
+                }
+
+                title = before.Trim().TrimStart('-', ' ', ':'); // remove any leading dash or colon
+
+                // Parse the date
+                if (TryParseDate(after, out DateTime parsedDate))
+                {
+                    dueDate = parsedDate;
+                }
+                else
+                {
+                    // If date parsing fails, keep the entire input as title
+                    title = input.Trim().TrimStart('-', ' ', ':');
+                    // Remove "add task" from title if present
+                    foreach (var prefix in removePrefixes)
+                    {
+                        if (title.ToLower().Contains(prefix))
+                        {
+                            int idx2 = title.ToLower().IndexOf(prefix);
+                            title = title.Substring(idx2 + prefix.Length).Trim();
+                            break;
+                        }
+                    }
+                    dueDate = null;
+                    return true;
+                }
+
+                if (string.IsNullOrEmpty(title))
+                {
+                    // If title is empty, put the whole thing as title
+                    title = input.Trim().TrimStart('-', ' ', ':');
+                    foreach (var prefix in removePrefixes)
+                    {
+                        if (title.ToLower().Contains(prefix))
+                        {
+                            int idx2 = title.ToLower().IndexOf(prefix);
+                            title = title.Substring(idx2 + prefix.Length).Trim();
+                            break;
+                        }
+                    }
+                }
+                return true;
+            }
+
+            // No date keyword found – treat entire input as title (but remove "add task" etc.)
+            string raw = input.Trim();
+            string[] removePrefixes2 = { "add task", "new task", "create task", "remind me to" };
+            foreach (var prefix in removePrefixes2)
+            {
+                if (raw.ToLower().Contains(prefix))
+                {
+                    int idx2 = raw.ToLower().IndexOf(prefix);
+                    raw = raw.Substring(idx2 + prefix.Length).Trim();
+                    break;
+                }
+            }
+            title = raw;
+            dueDate = null;
+            return true;
+        }
+
+        /// <summary>
+        /// Tries to parse a date from various formats.
+        /// Supports: "26 June 2026", "2026-06-26", "06/26/2026", "tomorrow", "today", "in 5 days", etc.
+        /// </summary>
+        private bool TryParseDate(string dateString, out DateTime result)
+        {
+            result = DateTime.MinValue;
+            if (string.IsNullOrEmpty(dateString))
+                return false;
+
+            dateString = dateString.Trim().ToLower();
+
+            // Handle relative dates: "today", "tomorrow", "in 5 days"
+            if (dateString.Contains("today"))
+            {
+                result = DateTime.Today;
+                return true;
+            }
+            if (dateString.Contains("tomorrow"))
+            {
+                result = DateTime.Today.AddDays(1);
+                return true;
+            }
+            if (dateString.Contains("in"))
+            {
+                // Try to parse "in X days"
+                var match = Regex.Match(dateString, @"in\s+(\d+)\s+days?");
+                if (match.Success && int.TryParse(match.Groups[1].Value, out int days))
+                {
+                    result = DateTime.Today.AddDays(days);
+                    return true;
+                }
+            }
+
+            // Try standard date parsing
+            if (DateTime.TryParse(dateString, out result))
+                return true;
+
+            // Try to parse "26 June 2026" style
+            string[] formats = { "d MMMM yyyy", "d MMM yyyy", "MMMM d, yyyy", "MM/dd/yyyy", "yyyy-MM-dd", "dd/MM/yyyy" };
+            if (DateTime.TryParseExact(dateString, formats, System.Globalization.CultureInfo.InvariantCulture,
+                                       System.Globalization.DateTimeStyles.None, out result))
+                return true;
+
+            return false;
+        }
+
+        private void ShowTasks()
+        {
+            var tasks = _taskManager.GetAllTasks();
+            if (tasks.Count == 0)
+            {
+                BotSay("You have no tasks. Use 'add task <title>' to create one.");
+                return;
+            }
+            BotHeader("Your Cybersecurity Tasks");
+            foreach (var t in tasks)
+                BotInfo(t.ToString());
+            ShowMainMenu();
+        }
+
+        private void HandleCompleteTask(string input)
+        {
+            int id = ExtractId(input);
+            if (id <= 0)
+            {
+                BotWarn("Please specify the task ID to complete, e.g., 'complete task 3'.");
+                return;
+            }
+            bool success = _taskManager.CompleteTask(id);
+            if (success)
+            {
+                CyberLogger.Add($"Task {id} completed.");
+                BotSay($"Task {id} marked as completed!");
+            }
+            else
+                BotWarn($"Task {id} not found.");
+        }
+
+        private void HandleDeleteTask(string input)
+        {
+            int id = ExtractId(input);
+            if (id <= 0)
+            {
+                BotWarn("Please specify the task ID to delete, e.g., 'delete task 3'.");
+                return;
+            }
+            bool success = _taskManager.DeleteTask(id);
+            if (success)
+            {
+                CyberLogger.Add($"Task {id} deleted.");
+                BotSay($"Task {id} deleted.");
+            }
+            else
+                BotWarn($"Task {id} not found.");
+        }
+
+        private void HandleSetReminder(string input)
+        {
+            int id = ExtractId(input);
+            if (id <= 0)
+            {
+                BotWarn("Please specify the task ID and days, e.g., 'set reminder 2 in 5 days'.");
+                return;
+            }
+            int days = ExtractDays(input);
+            if (days <= 0)
+            {
+                BotWarn("Please specify a valid number of days, e.g., 'in 5 days'.");
+                return;
+            }
+            DateTime reminder = DateTime.Today.AddDays(days);
+            bool success = _taskManager.SetReminder(id, reminder);
+            if (success)
+            {
+                CyberLogger.Add($"Reminder set for task {id} on {reminder.ToShortDateString()}.");
+                BotSay($"Reminder set for task {id} on {reminder.ToShortDateString()}.");
+            }
+            else
+                BotWarn($"Task {id} not found.");
+        }
+
+        private int ExtractId(string input)
+        {
+            var words = input.Split(' ');
+            foreach (var w in words)
+                if (int.TryParse(w, out int id))
+                    return id;
+            return -1;
+        }
+
+        private int ExtractDays(string input)
+        {
+            var words = input.Split(' ');
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (words[i].Equals("in", StringComparison.OrdinalIgnoreCase) && i + 1 < words.Length)
+                {
+                    if (int.TryParse(words[i + 1], out int days))
+                        return days;
+                }
+                if (int.TryParse(words[i], out int d) && i + 1 < words.Length && words[i + 1].Contains("day"))
+                    return d;
+            }
+            return -1;
+        }
+
+        private void HandlePendingInput(string input)
+        {
+            string lower = input.ToLower();
+            if (pendingAction == "addtask")
+            {
+                if (lower.Contains("yes") || lower.Contains("sure") || lower.Contains("ok"))
+                {
+                    BotSay("How many days from today would you like the reminder? (e.g., '3 days')");
+                    pendingAction = "setreminder";
+                }
+                else if (lower.Contains("no") || lower.Contains("nope") || lower.Contains("nah"))
+                {
+                    BotSay("Okay, no reminder set.");
+                    pendingAction = "";
+                    pendingTask = null;
+                    ShowMainMenu();
+                }
+                else
+                {
+                    BotWarn("Please answer yes or no.");
+                }
+            }
+            else if (pendingAction == "setreminder")
+            {
+                int days = ExtractDays(input);
+                if (days <= 0)
+                {
+                    BotWarn("Please specify number of days, e.g., '3 days'.");
+                    return;
+                }
+                if (pendingTask != null)
+                {
+                    bool success = _taskManager.SetReminder(pendingTask.Id, DateTime.Today.AddDays(days));
+                    if (success)
+                    {
+                        CyberLogger.Add($"Reminder set for task {pendingTask.Id} in {days} days.");
+                        BotSay($"Reminder set for '{pendingTask.Title}' in {days} days.");
+                    }
+                    else
+                        BotWarn("Failed to set reminder. Task may have been deleted.");
+                }
+                pendingAction = "";
+                pendingTask = null;
+                ShowMainMenu();
+            }
+        }
+
+        // ──────────────────────────────────────────────────────────────
+        // ── QUIZ METHODS ──────────────────────────────────────────────
+        // ──────────────────────────────────────────────────────────────
+
+        public void StartQuiz()
+        {
+            if (_quiz.IsActive)
+            {
+                BotWarn("Quiz already in progress. Finish it first.");
+                return;
+            }
+            if (_quiz.TotalQuestions == 0)
+            {
+                BotWarn("Quiz questions not loaded.");
+                return;
+            }
+            _quiz.Start();
+            BotHeader("QUIZ STARTED");
+            DisplayQuizQuestion();
+        }
+
+        private void DisplayQuizQuestion()
+        {
+            var q = _quiz.GetCurrentQuestion();
+            if (q == null)
+            {
+                EndQuiz();
+                return;
+            }
+            BotSay($"Question {_quiz.CurrentScore + 1} of {_quiz.TotalQuestions}");
+            BotSay(q.Question);
+            if (q.IsTrueFalse)
+            {
+                BotInfo("1. True");
+                BotInfo("2. False");
+            }
+            else
+            {
+                for (int i = 0; i < q.Options.Count; i++)
+                    BotInfo($"{i + 1}. {q.Options[i]}");
+            }
+            BotSay("Type your answer (number or text).");
+        }
+
+        public void ProcessQuizAnswer(string input)
+        {
+            var q = _quiz.GetCurrentQuestion();
+            if (q == null) { EndQuiz(); return; }
+
+            int selected = -1;
+            if (int.TryParse(input, out int num) && num >= 1 && num <= (q.IsTrueFalse ? 2 : q.Options.Count))
+                selected = num - 1;
+            else
+            {
+                string lower = input.ToLower();
+                if (q.IsTrueFalse)
+                {
+                    if (lower.Contains("true") || lower == "1") selected = 0;
+                    else if (lower.Contains("false") || lower == "2") selected = 1;
+                }
+                else
+                {
+                    for (int i = 0; i < q.Options.Count; i++)
+                        if (q.Options[i].ToLower().Contains(lower) || lower.Contains(q.Options[i].ToLower()))
+                        { selected = i; break; }
+                }
+            }
+
+            if (selected == -1)
+            {
+                BotWarn("Invalid answer. Please enter the number or text of your choice.");
+                return;
+            }
+
+            bool correct = _quiz.SubmitAnswer(new List<int> { selected });
+            BotSay(correct ? "✅ Correct!" : $"❌ Wrong. The correct answer was: {q.Options[q.CorrectIndices[0]]}");
+            BotInfo("Explanation: " + q.Explanation);
+
+            var next = _quiz.GetCurrentQuestion();
+            if (next != null)
+                DisplayQuizQuestion();
+            else
+                EndQuiz();
+        }
+
+        private void EndQuiz()
+        {
+            if (_quiz.IsActive) return;
+            BotHeader("QUIZ COMPLETE");
+            BotSay(_quiz.GetResultMessage());
+            ShowMainMenu();
+        }
+
+        // ──────────────────────────────────────────────────────────────
+        // ── ACTIVITY LOG ──────────────────────────────────────────────
+        // ──────────────────────────────────────────────────────────────
+
+        private void ShowActivityLog()
+        {
+            BotHeader("Activity Log");
+            var logEntries = CyberLogger.Log;
+            if (logEntries.Count == 0)
+                BotInfo("No actions logged yet.");
+            else
+            {
+                int take = Math.Min(10, logEntries.Count);
+                var recent = logEntries.Skip(logEntries.Count - take).ToList();
+                for (int i = 0; i < recent.Count; i++)
+                    BotInfo($"{i + 1}. {recent[i]}");
+            }
+            ShowMainMenu();
         }
     }
 }
