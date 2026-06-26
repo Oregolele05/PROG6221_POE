@@ -50,37 +50,45 @@ The application uses **MySQL** to persist tasks and features a sidebar navigatio
 
 ---
 
-## 📂 Project Structure
-CyberGuard/
-│
-├── Core Classes
-│ ├── CyberDesign.cs # Base display logic (colours, formatting)
-│ ├── CyberChatDisplay.cs # WPF RichTextBox bridge
-│ ├── CyberSpace.cs # Main chatbot engine (conversation flow)
-│ ├── CyberUser.cs # Session memory (name, favourite topic, time)
-│ ├── CyberTips.cs # NLP, keywords, tips, sentiment
-│ ├── CyberTask.cs # Task entity
-│ ├── CyberTaskManager.cs # MySQL CRUD operations
-│ ├── CyberQuiz.cs # Quiz engine (15 questions, 3 types)
-│ └── CyberLogger.cs # Static activity logger
-│
-├── XAML Controls (GUI)
-│ ├── ChatControl.xaml/.cs # Chat interface
-│ ├── TaskControl.xaml/.cs # Task management panel
-│ ├── QuizControl.xaml/.cs # Quiz panel
-│ ├── PasswordCheckerControl.xaml/.cs # Password strength checker
-│ ├── ActivityLogControl.xaml/.cs # Activity log viewer
-│ └── ReminderDialog.xaml/.cs # Date picker dialog
-│
-├── Main
-│ ├── App.xaml/.cs # Application entry point
-│ ├── MainWindow.xaml/.cs # Navigation hub (sidebar)
-│ └── Properties/ # Assembly info, resources
-│
-└── Resources
-└── greet.wav # Optional voice greeting
 
 ---
+
+## 📊 Class Descriptions
+
+| **Class** | **Purpose** |
+|-----------|-------------|
+| `CyberDesign.cs` | Base class for all visual output; handles colours, message formatting, logo display |
+| `CyberChatDisplay.cs` | Bridges CyberDesign to the WPF RichTextBox; converts colours and handles alignment |
+| `CyberSpace.cs` | Main chatbot engine; manages conversation flow, NLP parsing, task/quiz/log handlers |
+| `CyberUser.cs` | Session memory; stores username, current section, favourite topic, time per topic |
+| `CyberTips.cs` | NLP and content repository; keyword detection, sentiment analysis, random tips |
+| `CyberTask.cs` | Task entity model; properties: Id, Title, Description, ReminderDate, IsCompleted |
+| `CyberTaskManager.cs` | MySQL data access; AddTask, GetAllTasks, CompleteTask, DeleteTask, SetReminder |
+| `CyberQuiz.cs` | Quiz engine; 15 questions, 3 types, scoring, feedback, result messages |
+| `CyberLogger.cs` | Static activity logger; ObservableCollection, timestamps, limited to 20 entries |
+
+---
+
+## 🖥️ XAML Controls
+
+| **Control** | **Purpose** |
+|-------------|-------------|
+| `ChatControl.xaml` | Main chat interface with RichTextBox, input box, and Send button |
+| `TaskControl.xaml` | Task management GUI; ListView, input fields, action buttons (Add, Complete, Delete) |
+| `QuizControl.xaml` | Quiz panel; dynamically displays questions with RadioButtons or CheckBoxes |
+| `PasswordCheckerControl.xaml` | Password strength checker; progress bar, real‑time analysis, suggestions |
+| `ActivityLogControl.xaml` | Log viewer; binds to CyberLogger.Log, shows empty message when no entries |
+| `ReminderDialog.xaml` | Simple popup dialog with DatePicker for setting reminders |
+
+---
+
+## 🔧 Main Files
+
+| **File** | **Purpose** |
+|----------|-------------|
+| `App.xaml` | Application entry point; defines global styles and resources |
+| `MainWindow.xaml` | Navigation hub; sidebar with buttons that switch between controls |
+| `Program.cs` | Application bootstrap; starts the WPF application |
 
 ## ❗ Troubleshooting
 
