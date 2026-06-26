@@ -105,6 +105,6 @@ The application uses **MySQL** to persist tasks and features a sidebar navigatio
 ## 📺 Presentation & Repository
 
 - **YouTube Presentation:** https://youtu.be/LNNYVTJw_sI
-- **GitHub Repository:** 
+- **GitHub Repository:** https://github.com/Oregolele05/PROG6221_POE/tree/master/ASSIGNMENT/PART3
 
 
